@@ -1,0 +1,29 @@
+{% extends "mainapp/base.html" %}
+
+{% block title %}Achievements{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Our Achievements</h2>
+    
+    {% if achievements %}
+        <div class="row">
+            {% for achievement in achievements %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ achievement.title }}</h5>
+                            <p class="card-text">{{ achievement.description }}</p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Achieved on: {{ achievement.date|date:"F j, Y" }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">No achievements have been added yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

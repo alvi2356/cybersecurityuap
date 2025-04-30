@@ -1,0 +1,38 @@
+{% extends "mainapp/base.html" %}
+{% block title %} Events Page {% endblock title %}
+{% block content %}
+<div class="form-content my-3 p-3">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0 rounded-lg mt-0 mb-5">
+                    <div class="card-header justify-content-center">
+                        <h3 class="font-weight-light my-4 text-center">Upcoming Cyber Security Events</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if events %}
+                            <ul class="list-unstyled">
+                                {% for event in events %}
+                                    <li class="mb-3 p-3 border rounded bg-light">
+                                        <h5><strong>{{ event.title }}</strong></h5>
+                                        <p class="mb-1"><strong>Date:</strong> {{ event.date }}</p>
+                                        <p class="mb-1"><strong>Location:</strong> {{ event.location }}</p>
+                                        <p>{{ event.description }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-center">No events available right now.</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="small">
+                            <a href="{% url 'home' %}">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
