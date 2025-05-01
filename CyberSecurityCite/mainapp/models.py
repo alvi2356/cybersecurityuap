@@ -56,3 +56,13 @@ class ContactForm(models.Model):
     message = models.TextField()
     submissionDate = models.DateField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+class FormerPresident(models.Model):
+    formerPresidentID = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    position = models.CharField(max_length=100)
+    semester = models.CharField(max_length=20)
+    socialLinks = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.user.get_full_name() or self.user.username

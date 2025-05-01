@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Event, Achievement
+from .models import Event, Achievement,TeamMember, FormerPresident
 from django.contrib import messages
+
 
 def home(request):
     return render(request, 'mainapp/home.html')
@@ -18,11 +19,13 @@ def achievements(request):
 def contact(request):
     return render(request, 'mainapp/contact.html')
 
-from .models import TeamMember
-
 def team(request):
     members = TeamMember.objects.all()
     return render(request, 'mainapp/team.html', {'members': members})
+
+def formerpresident(request):
+    members = FormerPresident.objects.all()
+    return render(request, 'mainapp/formerpresident.html', {'president': president})
 
 def login_view(request):
     if request.method == 'POST':
