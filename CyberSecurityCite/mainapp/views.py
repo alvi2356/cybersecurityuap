@@ -18,10 +18,12 @@ def achievements(request):
 def contact(request):
     return render(request, 'mainapp/contact.html')
 
-def team(request):
-    return render(request, 'mainapp/team.html')
+from .models import TeamMember
 
-# Add Login View
+def team(request):
+    members = TeamMember.objects.all()
+    return render(request, 'mainapp/team.html', {'members': members})
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -35,7 +37,7 @@ def login_view(request):
             return redirect('login')
     return render(request, 'mainapp/login.html')
 
-# Add Register View
+
 def register_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -55,7 +57,7 @@ def register_view(request):
             messages.error(request, "Email already exists.")
             return redirect('register')
 
-        # Create User
+
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
         messages.success(request, "Registration successful! You can now login.")
@@ -63,7 +65,7 @@ def register_view(request):
 
     return render(request, 'mainapp/register.html')
 
-# Optional: Logout View
+
 def logout_view(request):
     logout(request)
     return redirect('home')

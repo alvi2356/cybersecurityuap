@@ -12,13 +12,17 @@ class User(models.Model):
     passwordHash = models.CharField(max_length=255)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
     bio = models.TextField(blank=True)
-
+    def __str__(self):
+        return self.name
 class TeamMember(models.Model):
     teamMemberID = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     position = models.CharField(max_length=100)
     bio = models.TextField(blank=True)
     socialLinks = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.user.name
 
 class Event(models.Model):
     eventID = models.AutoField(primary_key=True)
@@ -42,6 +46,7 @@ class Achievement(models.Model):
     description = models.TextField()
     dateAchieved = models.DateField()
     associatedUser = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
 class ContactForm(models.Model):
     formID = models.AutoField(primary_key=True)

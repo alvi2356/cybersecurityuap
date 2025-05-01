@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Our Achievements</h2>
+    <h1 class="text-center mb-4" style="font-family: 'Georgia', serif;">Our Achievements</h1>
     
     {% if achievements %}
         <div class="row">
@@ -12,8 +12,11 @@
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">{{ achievement.title }}</h5>
-                            <p class="card-text">{{ achievement.description }}</p>
+                       <h4 class="card-title" style="font-family: 'Georgia', serif;">{{ achievement.associatedUser }}</h4>
+<p class="card-text" style="font-family: 'Georgia', serif;"><b>Title:</b> {{ achievement.title }}</p>
+<p class="card-text" style="font-family: 'Georgia', serif;"><b>Description:</b> {{ achievement.description }}</p>
+<p class="card-text" style="font-family: 'Georgia', serif;"><b>Date of Achievement:</b> {{ achievement.dateAchieved }}</p>
+
                         </div>
                         <div class="card-footer text-muted">
                             Achieved on: {{ achievement.date|date:"F j, Y" }}
