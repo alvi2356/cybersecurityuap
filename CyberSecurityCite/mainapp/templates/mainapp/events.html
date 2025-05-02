@@ -17,7 +17,7 @@
     }
 
     body {
-      background-color: #091023;
+      background: #0a192f;
       color: #fff;
       line-height: 1.6;
     }
@@ -135,13 +135,13 @@
 
     /* Featured event */
     .featured-event {
-      background-color: rgba(9, 22, 46, 0.6);
-      border-radius: 1rem;
+      background: #112240 !important;
+      border: 1px solid rgba(100,255,218,0.10) !important;
+      border-radius: 1.5rem !important;
       overflow: hidden;
       display: flex;
       margin-bottom: 3rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(59, 130, 246, 0.1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.13) !important;
     }
 
     .featured-event-image {
@@ -154,6 +154,11 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .featured-event:hover .featured-event-image img {
+      transform: scale(1.05);
     }
 
     .featured-event-content {
@@ -162,8 +167,8 @@
     }
 
     .featured-tag {
-      background-color: rgba(55, 205, 190, 0.2);
-      color: #37CDBE;
+      background: rgba(100,255,218,0.10) !important;
+      color: #64ffda !important;
       display: inline-block;
       padding: 0.3rem 1rem;
       border-radius: 2rem;
@@ -175,6 +180,7 @@
       font-size: 1.8rem;
       margin-bottom: 1rem;
       font-weight: 600;
+      color: #64ffda !important;
     }
 
     .featured-event-content p {
@@ -190,7 +196,7 @@
     }
 
     .event-meta i {
-      color: #37CDBE;
+      color: #64ffda !important;
       margin-right: 0.5rem;
       width: 16px;
     }
@@ -198,19 +204,19 @@
     .btn {
       display: inline-block;
       background-color: transparent;
-      border: 1px solid #37CDBE;
-      color: #37CDBE;
+      border: 1px solid #64ffda !important;
+      color: #64ffda !important;
       padding: 0.6rem 1.5rem;
       border-radius: 0.3rem;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: background 0.2s, color 0.2s;
       font-weight: 500;
       margin-top: 1rem;
     }
 
     .btn:hover {
-      background-color: #37CDBE;
-      color: #05091a;
+      background: #64ffda !important;
+      color: #0a192f !important;
     }
 
     /* Events grid */
@@ -218,6 +224,7 @@
       font-size: 1.8rem;
       margin: 3rem 0 2rem;
       font-weight: 600;
+      color: #64ffda !important;
     }
 
     .events-grid {
@@ -228,16 +235,19 @@
     }
 
     .event-card {
-      background-color: rgba(9, 22, 46, 0.6);
-      border-radius: 1rem;
+      background: #112240 !important;
+      border: 1px solid rgba(100,255,218,0.10) !important;
+      border-radius: 1.5rem !important;
       overflow: hidden;
-      border: 1px solid rgba(59, 130, 246, 0.1);
       position: relative;
       transition: transform 0.3s ease;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10) !important;
     }
 
     .event-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18) !important;
+      border-color: #64ffda44 !important;
     }
 
     .date-badge {
@@ -409,6 +419,10 @@
         justify-content: center;
       }
     }
+
+    .no-events h2, .no-events p {
+      color: #b4b9c4 !important;
+    }
   </style>
 </head>
 <body>
@@ -422,12 +436,12 @@
     </div>
     <nav>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#" class="active">Events</a></li>
-        <li><a href="#">Team</a></li>
-        <li><a href="#">Achievements</a></li>
-        <li><a href="#">Former Presidents</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'events' %}" class="active">Events</a></li>
+        <li><a href="{% url 'team' %}">Team</a></li>
+        <li><a href="{% url 'achievements' %}">Achievements</a></li>
+        <li><a href="{% url 'formerpresident' %}">Former Presidents</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -450,25 +464,26 @@
   <!-- Main Content -->
   <div class="container">
     <!-- Featured Event -->
+    {% if events %}
     <div class="featured-event">
       <div class="featured-event-image">
-        <img src="/api/placeholder/400/320" alt="Featured Event">
+        {% if events.0.image %}
+            <img src="{{ events.0.image.url }}" alt="{{ events.0.title }}">
+        {% else %}
+            <img src="/static/images/events/default-event.jpg" alt="{{ events.0.title }}">
+        {% endif %}
       </div>
       <div class="featured-event-content">
         <span class="featured-tag">Featured Event</span>
-        <h2>Cyber Security Workshop 2024</h2>
-        <p>Learn about the latest cyber security threats and how to protect against them.</p>
+        <h2>{{ events.0.title }}</h2>
+        <p>{{ events.0.description }}</p>
         <div class="event-meta">
           <i class="fas fa-calendar-alt"></i>
-          <span>April 15, 2024</span>
-        </div>
-        <div class="event-meta">
-          <i class="fas fa-clock"></i>
-          <span>2:00 PM - 5:00 PM</span>
+          <span>{{ events.0.date|date:"F d, Y" }}</span>
         </div>
         <div class="event-meta">
           <i class="fas fa-map-marker-alt"></i>
-          <span>Computer Lab 101</span>
+          <span>{{ events.0.location }}</span>
         </div>
         <a href="#" class="btn">Register Now</a>
       </div>
@@ -477,126 +492,74 @@
     <!-- Upcoming Events -->
     <h2 class="events-heading">Upcoming Events</h2>
     <div class="events-grid">
-      <!-- Event 1 -->
-      <div class="event-card">
-        <div class="date-badge">
-          <div class="day">15</div>
-          <div class="month">APR</div>
-        </div>
-        <img src="/api/placeholder/400/320" alt="Web Security Workshop">
-        <div class="event-card-content">
-          <h3>Web Security Workshop</h3>
-          <p>Learn about common web vulnerabilities and how to secure web applications.</p>
-          <div class="event-meta">
-            <i class="fas fa-clock"></i>
-            <span>2:00 PM</span>
+      {% for event in events %}
+        {% if forloop.counter > 1 %}
+        <div class="event-card">
+          <div class="date-badge">
+            <div class="day">{{ event.date|date:"d" }}</div>
+            <div class="month">{{ event.date|date:"M"|upper }}</div>
           </div>
-          <div class="event-meta">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>Lab 101</span>
+          <div class="featured-event-image">
+            {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.title }}">
+            {% else %}
+                <img src="/static/images/events/default-event.jpg" alt="{{ event.title }}">
+            {% endif %}
           </div>
-          <a href="#" class="btn">Learn More</a>
-        </div>
-      </div>
-
-      <!-- Event 2 -->
-      <div class="event-card">
-        <div class="date-badge">
-          <div class="day">20</div>
-          <div class="month">MAY</div>
-        </div>
-        <img src="/api/placeholder/400/320" alt="Ethical Hacking Workshop">
-        <div class="event-card-content">
-          <h3>Ethical Hacking Workshop Series</h3>
-          <p>A comprehensive workshop covering the fundamentals of ethical hacking and penetration testing.</p>
-          <div class="event-meta">
-            <i class="fas fa-clock"></i>
-            <span>10:00 AM - 4:00 PM</span>
+          <div class="event-card-content">
+            <h3>{{ event.title }}</h3>
+            <p>{{ event.description }}</p>
+            <div class="event-meta">
+              <i class="fas fa-calendar-alt"></i>
+              <span>{{ event.date|date:"F d, Y" }}</span>
+            </div>
+            <div class="event-meta">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{ event.location }}</span>
+            </div>
+            <div class="event-meta">
+              <i class="fas fa-users"></i>
+              <span>Capacity: {{ event.capacity }}</span>
+            </div>
+            <a href="#" class="btn">Learn More</a>
           </div>
-          <div class="event-meta">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>Lab 503, 5th Floor</span>
-          </div>
-          <a href="#" class="btn">Learn More</a>
         </div>
-      </div>
-
-      <!-- Event 3 -->
-      <div class="event-card">
-        <div class="date-badge">
-          <div class="day">25</div>
-          <div class="month">MAY</div>
-        </div>
-        <img src="/api/placeholder/400/320" alt="Cybersecurity Career Panel">
-        <div class="event-card-content">
-          <h3>Cybersecurity Career Panel</h3>
-          <p>Join us for an insightful panel discussion with industry professionals sharing their career journeys.</p>
-          <div class="event-meta">
-            <i class="fas fa-clock"></i>
-            <span>2:00 PM - 5:00 PM</span>
-          </div>
-          <div class="event-meta">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>Auditorium, 6th Floor</span>
-          </div>
-          <a href="#" class="btn">Learn More</a>
-        </div>
-      </div>
+        {% endif %}
+      {% endfor %}
     </div>
+    {% else %}
+    <div class="no-events">
+      <h2>No events available at the moment.</h2>
+      <p>Please check back later for upcoming events.</p>
+    </div>
+    {% endif %}
 
     <!-- Past Events -->
     <h2 class="events-heading">Past Events</h2>
     <div class="events-grid past-events">
-      <!-- Past Event 1 -->
-      <div class="event-card">
-        <img src="/api/placeholder/400/320" alt="Network Security Seminar">
-        <div class="event-card-content">
-          <h3>Network Security Seminar</h3>
-          <p>An informative seminar on network security principles and best practices.</p>
-          <div class="event-meta">
-            <i class="fas fa-calendar-alt"></i>
-            <span>April 15, 2025</span>
-          </div>
-          <div class="event-meta">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>Auditorium, 6th Floor</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Past Event 2 -->
-      <div class="event-card">
-        <img src="/api/placeholder/400/320" alt="Web Security Workshop">
-        <div class="event-card-content">
-          <h3>Web Security Workshop</h3>
-          <p>Hands-on workshop covering common web vulnerabilities and OWASP Top 10.</p>
-          <div class="event-meta">
-            <i class="fas fa-calendar-alt"></i>
-            <span>March 10, 2025</span>
-          </div>
-          <div class="event-meta">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>Lab 503, 5th Floor</span>
+      {% if past_events %}
+        {% for event in past_events %}
+        <div class="event-card">
+          <img src="/api/placeholder/400/320" alt="{{ event.title }}">
+          <div class="event-card-content">
+            <h3>{{ event.title }}</h3>
+            <p>{{ event.description }}</p>
+            <div class="event-meta">
+              <i class="fas fa-calendar-alt"></i>
+              <span>{{ event.date|date:"F d, Y" }}</span>
+            </div>
+            <div class="event-meta">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{ event.location }}</span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- Past Event 3 -->
-      <div class="event-card">
-        <img src="/api/placeholder/400/320" alt="Cyber Awareness Week">
-        <div class="event-card-content">
-          <h3>Cyber Awareness Week</h3>
-          <p>A week-long event featuring daily activities to raise awareness about cybersecurity issues.</p>
-          <div class="event-meta">
-            <i class="fas fa-calendar-alt"></i>
-            <span>February 20-25, 2025</span>
-          </div>
-          <div class="event-meta">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>Multiple locations, UAP Campus</span>
-          </div>
+        {% endfor %}
+      {% else %}
+        <div class="no-events">
+          <p>No past events to display.</p>
         </div>
-      </div>
+      {% endif %}
     </div>
   </div>
 
@@ -612,10 +575,10 @@
       <div class="footer-links">
         <h3>Quick Links</h3>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">Team</a></li>
-          <li><a href="#">Achievements</a></li>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'events' %}">Events</a></li>
+          <li><a href="{% url 'team' %}">Team</a></li>
+          <li><a href="{% url 'achievements' %}">Achievements</a></li>
         </ul>
       </div>
 
