@@ -1,70 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Events | CSE UAP Cyber Security Club</title>
+  <script src="https://unpkg.com/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .fadeIn {
+      animation: fadeIn 0.5s forwards;
+    }
+    .delay-100 {
+      animation-delay: 0.1s;
+    }
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+    .cyber-text-glow {
+      text-shadow: 0 0 10px rgba(59, 130, 246, 0.7);
+    }
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+    .grayscale {
+      filter: grayscale(100%);
+    }
+    .grayscale:hover {
+      filter: grayscale(0);
+    }
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 0;">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 48px 16px;">
+<body style="margin: 0; font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: white;">
+  <div id="particles-js"></div>
+
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 16px; padding-top: 48px; padding-bottom: 48px;">
     <!-- Header -->
-    <div style="text-align: center; margin-bottom: 64px;">
-      <h1 style="font-size: 40px; font-weight: bold; margin-bottom: 16px; color: #60a5fa;">Events</h1>
-      <p style="max-width: 700px; margin: 0 auto; color: #cbd5e1;">
+    <div style="text-align: center; margin-bottom: 64px; opacity: 0;" class="fadeIn">
+      <h1 style="font-size: 3rem; line-height: 1; font-weight: 700; margin-bottom: 16px;" class="cyber-text-glow">Events</h1>
+      <p style="color: #d1d5db; max-width: 800px; margin: 0 auto;">
         Join us at our upcoming events to enhance your cybersecurity knowledge, network with professionals, and build practical skills.
       </p>
     </div>
 
     <!-- Upcoming Events -->
-    <div style="margin-bottom: 64px;">
-      <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 32px; padding-bottom: 4px; border-bottom: 2px solid #3b82f6;">Upcoming Events</h2>
-      <div style="display: flex; flex-wrap: wrap; gap: 24px;">
-        <!-- Event Card: Ethical Hacking Workshop -->
-        <div style="background-color: #1e293b; border-radius: 8px; overflow: hidden; width: 100%; max-width: 350px;">
-          <div style="height: 200px; overflow: hidden;">
-            <img src="https://images.unsplash.com/photo-1579403124614-197f69d8187b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Ethical Hacking Workshop" style="width: 100%; height: 100%; object-fit: cover;" />
+    <div style="margin-bottom: 64px; opacity: 0;" class="fadeIn delay-100">
+      <h2 style="font-size: 1.5rem; line-height: 2rem; font-weight: 700; margin-bottom: 32px; display: inline-block; border-bottom: 2px solid #3b82f6; padding-bottom: 4px;">Upcoming Events</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 32px;">
+        <!-- Event 1 -->
+        <div style="border-radius: 0.5rem; overflow: hidden; background-color: #1e1e1e; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+          <div style="height: 192px; overflow: hidden;">
+            <img
+              src="https://images.unsplash.com/photo-1579403124614-197f69d8187b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Ethical Hacking Workshop Series"
+              style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;"
+              class="hover-scale"
+            />
           </div>
           <div style="padding: 24px;">
-            <div style="margin-bottom: 12px;">
-              <span style="background-color: #1e40af; color: #93c5fd; padding: 4px 8px; margin-right: 6px; border-radius: 4px; font-size: 12px;">Workshop</span>
-              <span style="background-color: #1e40af; color: #93c5fd; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Beginner-Friendly</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+              <span style="background-color: rgba(30, 58, 138, 0.4); color: #93c5fd; border-radius: 9999px; padding: 4px 12px; font-size: 0.875rem; line-height: 1.25rem;">Workshop</span>
+              <span style="background-color: rgba(30, 58, 138, 0.4); color: #93c5fd; border-radius: 9999px; padding: 4px 12px; font-size: 0.875rem; line-height: 1.25rem;">Beginner-Friendly</span>
             </div>
-            <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 12px;">Ethical Hacking Workshop Series</h3>
-            <div style="color: #94a3b8; margin-bottom: 16px;">
-              <p><strong>Date:</strong> May 20, 2025</p>
-              <p><strong>Time:</strong> 10:00 AM - 4:00 PM</p>
-              <p><strong>Location:</strong> Lab 503, 5th Floor, UAP Main Building</p>
+            <h3 style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; margin-bottom: 8px;">Ethical Hacking Workshop Series</h3>
+            <div style="color: #9ca3af; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="calendar" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>May 20, 2025</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="clock" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>10:00 AM - 4:00 PM</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="map-pin" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>Lab 503, 5th Floor, UAP Main Building</span>
+              </div>
             </div>
-            <p style="color: #cbd5e1; margin-bottom: 16px;">
+            <p style="color: #d1d5db; margin-bottom: 24px;">
               A comprehensive workshop covering the fundamentals of ethical hacking, penetration testing methodologies, and hands-on practice with common security tools.
             </p>
-            <a href="#" style="display: block; background: linear-gradient(to right, #2563eb, #3b82f6); color: white; text-align: center; padding: 10px; border-radius: 4px; text-decoration: none;">Register Now</a>
+            <button style="width: 100%; background: linear-gradient(to right, #2563eb, #3b82f6); color: white; font-weight: 500; padding: 8px 16px; border-radius: 0.375rem; border: none; cursor: pointer; transition: all 0.2s ease;">
+              Register Now
+            </button>
           </div>
         </div>
 
-        <!-- Repeat similar cards for other upcoming events -->
-        <!-- Cybersecurity Career Panel -->
-        <div style="background-color: #1e293b; border-radius: 8px; overflow: hidden; width: 100%; max-width: 350px;">
-          <div style="height: 200px; overflow: hidden;">
-            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Cybersecurity Career Panel" style="width: 100%; height: 100%; object-fit: cover;" />
+        <!-- Event 2 -->
+        <div style="border-radius: 0.5rem; overflow: hidden; background-color: #1e1e1e; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+          <div style="height: 192px; overflow: hidden;">
+            <img
+              src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Cybersecurity Career Panel"
+              style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;"
+              class="hover-scale"
+            />
           </div>
           <div style="padding: 24px;">
-            <div style="margin-bottom: 12px;">
-              <span style="background-color: #1e40af; color: #93c5fd; padding: 4px 8px; margin-right: 6px; border-radius: 4px; font-size: 12px;">Panel</span>
-              <span style="background-color: #1e40af; color: #93c5fd; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Career</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+              <span style="background-color: rgba(30, 58, 138, 0.4); color: #93c5fd; border-radius: 9999px; padding: 4px 12px; font-size: 0.875rem; line-height: 1.25rem;">Panel</span>
+              <span style="background-color: rgba(30, 58, 138, 0.4); color: #93c5fd; border-radius: 9999px; padding: 4px 12px; font-size: 0.875rem; line-height: 1.25rem;">Career</span>
             </div>
-            <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 12px;">Cybersecurity Career Panel</h3>
-            <div style="color: #94a3b8; margin-bottom: 16px;">
-              <p><strong>Date:</strong> May 25, 2025</p>
-              <p><strong>Time:</strong> 2:00 PM - 5:00 PM</p>
-              <p><strong>Location:</strong> Auditorium, 6th Floor, UAP Main Building</p>
+            <h3 style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; margin-bottom: 8px;">Cybersecurity Career Panel</h3>
+            <div style="color: #9ca3af; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="calendar" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>May 25, 2025</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="clock" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>2:00 PM - 5:00 PM</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="map-pin" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>Auditorium, 6th Floor, UAP Main Building</span>
+              </div>
             </div>
-            <p style="color: #cbd5e1; margin-bottom: 16px;">
+            <p style="color: #d1d5db; margin-bottom: 24px;">
               Join us for an insightful panel discussion with industry professionals sharing their career journeys, tips for breaking into the cybersecurity field, and answering your questions.
             </p>
-            <a href="#" style="display: block; background: linear-gradient(to right, #2563eb, #3b82f6); color: white; text-align: center; padding: 10px; border-radius: 4px; text-decoration: none;">Register Now</a>
+            <button style="width: 100%; background: linear-gradient(to right, #2563eb, #3b82f6); color: white; font-weight: 500; padding: 8px 16px; border-radius: 0.375rem; border: none; cursor: pointer; transition: all 0.2s ease;">
+              Register Now
+            </button>
           </div>
         </div>
 
-        <!-- Add the third event similarly if needed -->
-      </div
+        <!-- Event 3 -->
+        <div style="border-radius: 0.5rem; overflow: hidden; background-color: #1e1e1e; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+          <div style="height: 192px; overflow: hidden;">
+            <img
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="CTF Competition Preparation"
+              style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;"
+              class="hover-scale"
+            />
+          </div>
+          <div style="padding: 24px;">
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+              <span style="background-color: rgba(30, 58, 138, 0.4); color: #93c5fd; border-radius: 9999px; padding: 4px 12px; font-size: 0.875rem; line-height: 1.25rem;">Competition</span>
+              <span style="background-color: rgba(30, 58, 138, 0.4); color: #93c5fd; border-radius: 9999px; padding: 4px 12px; font-size: 0.875rem; line-height: 1.25rem;">Advanced</span>
+            </div>
+            <h3 style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; margin-bottom: 8px;">CTF Competition Preparation</h3>
+            <div style="color: #9ca3af; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="calendar" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>June 5, 2025</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="clock" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>1:00 PM - 6:00 PM</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="map-pin" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>Lab 504, 5th Floor, UAP Main Building</span>
+              </div>
+            </div>
+            <p style="color: #d1d5db; margin-bottom: 24px;">
+              Prepare for upcoming Capture The Flag competitions with our intensive training session. Learn strategies, practice with previous challenges, and form teams.
+            </p>
+            <button style="width: 100%; background: linear-gradient(to right, #2563eb, #3b82f6); color: white; font-weight: 500; padding: 8px 16px; border-radius: 0.375rem; border: none; cursor: pointer; transition: all 0.2s ease;">
+              Register Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Past Events -->
+    <div style="opacity: 0;" class="fadeIn delay-200">
+      <h2 style="font-size: 1.5rem; line-height: 2rem; font-weight: 700; margin-bottom: 32px; display: inline-block; border-bottom: 2px solid #3b82f6; padding-bottom: 4px;">Past Events</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 32px;">
+        <!-- Past Event 1 -->
+        <div style="border-radius: 0.5rem; overflow: hidden; background-color: rgba(31, 41, 55, 0.5); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+          <div style="height: 192px; overflow: hidden;" class="grayscale">
+            <img
+              src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Network Security Seminar"
+              style="width: 100%; height: 100%; object-fit: cover;"
+            />
+          </div>
+          <div style="padding: 24px;">
+            <h3 style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; margin-bottom: 8px;">Network Security Seminar</h3>
+            <div style="color: #9ca3af; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="calendar" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>April 15, 2025</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="map-pin" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>Auditorium, 6th Floor, UAP Main Building</span>
+              </div>
+            </div>
+            <p style="color: #d1d5db;">
+              An informative seminar on network security principles, common vulnerabilities, and best practices for securing networks.
+            </p>
+          </div>
+        </div>
+
+        <!-- Past Event 2 -->
+        <div style="border-radius: 0.5rem; overflow: hidden; background-color: rgba(31, 41, 55, 0.5); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+          <div style="height: 192px; overflow: hidden;" class="grayscale">
+            <img
+              src="https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Web Security Workshop"
+              style="width: 100%; height: 100%; object-fit: cover;"
+            />
+          </div>
+          <div style="padding: 24px;">
+            <h3 style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; margin-bottom: 8px;">Web Security Workshop</h3>
+            <div style="color: #9ca3af; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="calendar" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>March 10, 2025</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="map-pin" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>Lab 503, 5th Floor, UAP Main Building</span>
+              </div>
+            </div>
+            <p style="color: #d1d5db;">
+              Hands-on workshop covering common web vulnerabilities, OWASP Top 10, and practical exercises on securing web applications.
+            </p>
+          </div>
+        </div>
+
+        <!-- Past Event 3 -->
+        <div style="border-radius: 0.5rem; overflow: hidden; background-color: rgba(31, 41, 55, 0.5); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+          <div style="height: 192px; overflow: hidden;" class="grayscale">
+            <img
+              src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Cyber Awareness Week"
+              style="width: 100%; height: 100%; object-fit: cover;"
+            />
+          </div>
+          <div style="padding: 24px;">
+            <h3 style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; margin-bottom: 8px;">Cyber Awareness Week</h3>
+            <div style="color: #9ca3af; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="calendar" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>February 20-25, 2025</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <i data-lucide="map-pin" style="width: 16px; height: 16px; margin-right: 8px; color: #60a5fa;"></i>
+                <span>Multiple locations, UAP Campus</span>
+              </div>
+            </div>
+            <p style="color: #d1d5db;">
+              A week-long event featuring daily activities to raise awareness about cybersecurity issues among the university community.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Initialize particles.js
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS('particles-js', {
+        "particles": {
+          "number": {
+            "value": 80,
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": "#3b82f6"
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
+            },
+            "polygon": {
+              "nb_sides": 5
+            }
+          },
+          "opacity": {
+            "value": 0.3,
+            "random": false,
+            "anim": {
+              "enable": false,
+              "speed": 1,
+              "opacity_min": 0.1,
+              "sync": false
+            }
+          },
+          "size": {
+            "value": 3,
+            "random": true,
+            "anim": {
+              "enable": false,
+              "speed": 40,
+              "size_min": 0.1,
+              "sync": false
+            }
+          },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#3b82f6",
+            "opacity": 0.2,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 2,
+            "direction": "none",
+            "random": false,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {
+              "enable": false,
+              "rotateX": 600,
+              "rotateY": 1200
+            }
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": true,
+              "mode": "grab"
+            },
+            "onclick": {
+              "enable": true,
+              "mode": "push"
+            },
+            "resize": true
+          },
+          "modes": {
+            "grab": {
+              "distance": 140,
+              "line_linked": {
+                "opacity": 1
+              }
+            },
+            "bubble": {
+              "distance": 400,
+              "size": 40,
+              "duration": 2,
+              "opacity": 8,
+              "speed": 3
+            },
+            "repulse": {
+              "distance": 200,
+              "duration": 0.4
+            },
+            "push": {
+              "particles_nb": 4
+            },
+            "remove": {
+              "particles_nb": 2
+            }
+          }
+        },
+        "retina_detect": true
+      });
+    });
+  </script>
+</body>
+</html>
