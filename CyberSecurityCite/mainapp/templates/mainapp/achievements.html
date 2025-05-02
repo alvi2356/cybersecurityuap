@@ -1,32 +1,755 @@
-{% extends "mainapp/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements - UAP Cyber Security Club</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Achievement Cards */
+        .achievement-card {
+            background: linear-gradient(145deg, var(--accent-color), rgba(17, 34, 64, 0.9));
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
 
-{% block title %}Achievements{% endblock %}
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(100, 255, 218, 0.1),
+                transparent
+            );
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
 
-{% block content %}
-<div class="container mt-4">
-    <h1 class="text-center mb-4" style="font-family: 'Georgia', serif;">Our Achievements</h1>
-    
-    {% if achievements %}
-        <div class="row">
-            {% for achievement in achievements %}
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                       <h4 class="card-title" style="font-family: 'Georgia', serif;">{{ achievement.associatedUser }}</h4>
-<p class="card-text" style="font-family: 'Georgia', serif;"><b>Title:</b> {{ achievement.title }}</p>
-<p class="card-text" style="font-family: 'Georgia', serif;"><b>Description:</b> {{ achievement.description }}</p>
-<p class="card-text" style="font-family: 'Georgia', serif;"><b>Date of Achievement:</b> {{ achievement.dateAchieved }}</p>
+        .achievement-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
+            border-color: rgba(100, 255, 218, 0.4);
+        }
 
+        .achievement-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .achievement-icon {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(100, 255, 218, 0.1);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-icon i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            text-shadow: 0 0 15px rgba(100, 255, 218, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover .achievement-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(100, 255, 218, 0.2);
+        }
+
+        .achievement-card h3 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card p {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .achievement-details {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .achievement-details .badge {
+            background: rgba(100, 255, 218, 0.1) !important;
+            color: var(--secondary-color);
+            padding: 0.6rem 1.2rem;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-details .badge:hover {
+            background: rgba(100, 255, 218, 0.2) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+        }
+
+        /* Achievement Section Header */
+        .achievements-section .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .achievements-section .section-header h2 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, var(--secondary-color), #00fff2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .achievements-section .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Category Filters */
+        .category-filters {
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            color: #ccc;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            padding: 0.5rem 1.2rem;
+            margin: 0 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--secondary-color);
+            border-color: rgba(100, 255, 218, 0.5);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('images/achievements-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .page-header .lead {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Custom Variables */
+        :root {
+            --primary-color: #0a192f;
+            --secondary-color: #64ffda;
+            --accent-color: #112240;
+            --text-color: #8892b0;
+        }
+
+        /* General Styles */
+        body {
+            background-color: var(--primary-color);
+            color: #ccc;
+            font-family: 'Calibre', sans-serif;
+        }
+
+        .navbar-logo {
+            height: 40px;
+        }
+
+        /* Timeline Styles */
+        .timeline-wrapper {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-year {
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .timeline-year::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: rgba(100, 255, 218, 0.2);
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        .year-label {
+            background: linear-gradient(45deg, var(--secondary-color), #00fff2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .year-label::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-color);
+            border: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        /* Statistics Styles */
+        .achievement-stats {
+            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.95)), url('images/stats-bg.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 4rem 0;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .stat-card i {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card .counter {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--secondary-color), #00fff2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-card p {
+            color: #ccc;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-card:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Footer Styles */
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            margin-left: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(100, 255, 218, 0.2);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .achievement-card {
+                padding: 2rem;
+            }
+
+            .achievement-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .achievement-icon i {
+                font-size: 2rem;
+            }
+
+            .achievement-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .achievement-card p {
+                font-size: 1rem;
+            }
+
+            .achievement-details .badge {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .page-header .lead {
+                font-size: 1.2rem;
+            }
+
+            .year-label {
+                font-size: 2rem;
+            }
+
+            .timeline-year::before {
+                left: 20px;
+                transform: none;
+            }
+
+            .year-label::before {
+                left: 20px;
+                transform: translate(0, -50%);
+            }
+
+            .stat-card .counter {
+                font-size: 2.5rem;
+            }
+
+            .stat-card p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="images/logo.png" alt="UAP Cyber Security Club Logo" class="navbar-logo me-2">
+                <span>UAP Cyber Security Club</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="achievements.html">Achievements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header achievement-header">
+        <div class="container">
+            <h1 class="text-center">Our Achievements</h1>
+            <p class="lead text-center">Celebrating our success and milestones in cybersecurity</p>
+        </div>
+    </header>
+
+    <!-- Achievement Categories -->
+    <section class="achievement-categories py-4">
+        <div class="container">
+            <div class="category-filters text-center">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="competitions">Competitions</button>
+                <button class="filter-btn" data-filter="research">Research</button>
+                <button class="filter-btn" data-filter="community">Community</button>
+                <button class="filter-btn" data-filter="innovation">Innovation</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="achievements-section py-5">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Club Achievements</h2>
+                <p>Our dedication to excellence in cybersecurity has earned us recognition across various domains</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Competition Achievement -->
+                <div class="col-lg-4 col-md-6 achievement-item" data-category="competitions">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="fas fa-trophy"></i>
                         </div>
-                        <div class="card-footer text-muted">
-                            Achieved on: {{ achievement.date|date:"F j, Y" }}
+                        <h3>National CTF Champions</h3>
+                        <p>First place at the National Cybersecurity Challenge, competing against 50+ university teams across the country.</p>
+                        <div class="achievement-details">
+                            <span class="badge">2024</span>
+                            <span class="badge">CTF Competition</span>
+                            <span class="badge">National</span>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+
+                <!-- Research Achievement -->
+                <div class="col-lg-4 col-md-6 achievement-item" data-category="research">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h3>Published Research</h3>
+                        <p>Our team's research on IoT security vulnerabilities was published in the International Journal of Security Studies.</p>
+                        <div class="achievement-details">
+                            <span class="badge">2023</span>
+                            <span class="badge">Research</span>
+                            <span class="badge">Publication</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Achievement -->
+                <div class="col-lg-4 col-md-6 achievement-item" data-category="community">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Community Outreach</h3>
+                        <p>Conducted cybersecurity awareness workshops for over 1,000 high school students across the region.</p>
+                        <div class="achievement-details">
+                            <span class="badge">2023-2024</span>
+                            <span class="badge">Education</span>
+                            <span class="badge">Outreach</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Innovation Achievement -->
+                <div class="col-lg-4 col-md-6 achievement-item" data-category="innovation">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Secure App Challenge Winner</h3>
+                        <p>Developed an innovative security solution for mobile banking that won the University Innovation Challenge.</p>
+                        <div class="achievement-details">
+                            <span class="badge">2024</span>
+                            <span class="badge">Innovation</span>
+                            <span class="badge">Development</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Competition Achievement -->
+                <div class="col-lg-4 col-md-6 achievement-item" data-category="competitions">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>HackTheBox University CTF</h3>
+                        <p>Ranked in the top 10 globally in the prestigious HackTheBox University CTF competition.</p>
+                        <div class="achievement-details">
+                            <span class="badge">2023</span>
+                            <span class="badge">International</span>
+                            <span class="badge">Top 10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Achievement -->
+                <div class="col-lg-4 col-md-6 achievement-item" data-category="community">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Industry Partnership</h3>
+                        <p>Established partnerships with leading cybersecurity firms to provide internship opportunities for club members.</p>
+                        <div class="achievement-details">
+                            <span class="badge">Ongoing</span>
+                            <span class="badge">Partnership</span>
+                            <span class="badge">Career Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% else %}
-        <p class="text-center">No achievements have been added yet.</p>
-    {% endif %}
-</div>
-{% endblock %}
+    </section>
+
+    <!-- Achievements Timeline -->
+    <section class="achievements-timeline py-5">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2>Achievement Timeline</h2>
+                <p>A chronological journey through our club's achievements over the years</p>
+            </div>
+            <div class="timeline-wrapper">
+                <!-- 2023 -->
+                <div class="timeline-year">
+                    <h3 class="year-label">2023</h3>
+                    <div class="row g-4">
+                        <div class="col-lg-4 col-md-6" data-category="competitions">
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <h3>National CTF Champions</h3>
+                                <p>First place in the National Cybersecurity CTF Competition 2023</p>
+                                <div class="achievement-details">
+                                    <span class="badge">National Level</span>
+                                    <span class="badge">CTF</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6" data-category="research">
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-medal"></i>
+                                </div>
+                                <h3>Research Excellence</h3>
+                                <p>Published 5 research papers in international cybersecurity journals</p>
+                                <div class="achievement-details">
+                                    <span class="badge">Research</span>
+                                    <span class="badge">Publications</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6" data-category="innovation">
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <h3>Innovation Award</h3>
+                                <p>Developed innovative security solutions for local businesses</p>
+                                <div class="achievement-details">
+                                    <span class="badge">Innovation</span>
+                                    <span class="badge">Industry</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2022 -->
+                <div class="timeline-year">
+                    <h3 class="year-label">2022</h3>
+                    <div class="row g-4">
+                        <div class="col-lg-4 col-md-6" data-category="community">
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h3>Community Impact</h3>
+                                <p>Trained 500+ students in cybersecurity fundamentals</p>
+                                <div class="achievement-details">
+                                    <span class="badge">Training</span>
+                                    <span class="badge">Community</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6" data-category="competitions">
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h3>Regional Champions</h3>
+                                <p>Won the Regional Cyber Defense Competition</p>
+                                <div class="achievement-details">
+                                    <span class="badge">Regional</span>
+                                    <span class="badge">Defense</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="achievement-stats py-5">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-md-3 col-6">
+                    <div class="stat-card">
+                        <i class="fas fa-trophy fa-3x mb-3"></i>
+                        <h3 class="counter">15</h3>
+                        <p>Competition Wins</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card">
+                        <i class="fas fa-certificate fa-3x mb-3"></i>
+                        <h3 class="counter">50</h3>
+                        <p>Certifications</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card">
+                        <i class="fas fa-project-diagram fa-3x mb-3"></i>
+                        <h3 class="counter">25</h3>
+                        <p>Projects</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card">
+                        <i class="fas fa-users fa-3x mb-3"></i>
+                        <h3 class="counter">100</h3>
+                        <p>Members</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <img src="images/logo.png" alt="UAP Cyber Security Club Logo" class="footer-logo mb-3">
+                    <h5>UAP Cyber Security Club</h5>
+                    <p>Empowering students with cybersecurity knowledge and skills.</p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Home</a></li>
+                        <li><a href="events.html" class="text-white">Events</a></li>
+                        <li><a href="team.html" class="text-white">Team</a></li>
+                        <li><a href="achievements.html" class="text-white">Achievements</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <h5>Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+
+    <!-- Counter Animation JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simple counter animation
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target') || +counter.innerText;
+                    const count = +counter.innerText;
+                    const increment = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(updateCount, 30);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+
+                // Store target in data attribute
+                counter.setAttribute('data-target', counter.innerText);
+                // Reset for animation
+                counter.innerText = '0';
+
+                // Add intersection observer to trigger animation when visible
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        updateCount();
+                        observer.unobserve(counter);
+                    }
+                });
+
+                observer.observe(counter);
+            });
+
+            // Filter functionality
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const achievementItems = document.querySelectorAll('.achievement-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(btn => btn.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    // Get filter value
+                    const filterValue = this.getAttribute('data-filter');
+
+                    // Filter items
+                    achievementItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
