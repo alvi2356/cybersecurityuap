@@ -1,34 +1,537 @@
-{% extends "mainapp/base.html" %}
-{% block title %}Our Team{% endblock %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - UAP Cyber Security Club</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --accent-color: #112240;
+            --secondary-color: #64ffda;
+            --text-color: #ccd6f6;
+        }
+        
+        /* Team Page Styles */
+        
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+        }
+        
+        .join-team {
+            background-color: #0a192f;
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        .join-content h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-primary {
+            background-color: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            border-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .footer-logo {
+            height: 60px;
+        }
+        
+        footer ul li {
+            margin-bottom: 10px;
+        }
+        
+        footer ul li a {
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        footer ul li a:hover {
+            color: var(--secondary-color) !important;
+            text-decoration: none;
+        }
+        
+        footer .social-links a {
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        footer .social-links a:hover {
+            color: var(--secondary-color) !important;
+        }
+        .team-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                        url('../images/team-bg.jpg') center/cover;
+            padding: 100px 0 50px;
+            color: white;
+            margin-top: 56px;
+        }
+        
+        .team-card {
+            perspective: 1000px;
+            height: 400px;
+        }
+        
+        .team-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        
+        .team-card:hover .team-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .team-card-front,
+        .team-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .team-card-front {
+            background: var(--accent-color);
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .team-card-back {
+            background: var(--accent-color);
+            transform: rotateY(180deg);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .team-card img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 5px solid rgba(100, 255, 218, 0.2);
+        }
+        
+        .team-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-card .position {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .team-card .social-links {
+            margin-top: 1.5rem;
+        }
+        
+        .team-card .social-links a {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .team-card .social-links a:hover {
+            transform: translateY(-3px);
+            color: white;
+        }
+        
+        .navbar-logo {
+            height: 40px;
+        }
+        
+        .team-categories {
+            background-color: #0a192f;
+        }
+        
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(100, 255, 218, 0.1);
+            color: white;
+        }
+        
+        .section-title {
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: var(--secondary-color);
+        }
+        
+        body {
+            background-color: #0a192f;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="images/logo.png" alt="UAP Cyber Security Club Logo" class="navbar-logo me-2">
+                <span>UAP Cyber Security Club</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="team.html">Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="achievements.html">Achievements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<div class="form-content my-3 p-3">
-    <div class="container">
-        <h1 class="text-center mb-4" style="font-family: 'Georgia', serif;">Meet Our Team</h1>
-        <div class="row justify-content-center">
-            {% for member in members %}
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-lg border-0 rounded-lg h-100">
-                        {% if member.photo %}
-                            <img src="{{ member.photo.url }}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="{{ member.name }}">
-                        {% endif %}
-                        <div class="card-body d-flex flex-column">
-                            <h4 class="card-title text-center mb-3">{{ member.user }}</h4>
-                            <div class="p-3 border rounded bg-light text-start">
-                                <p class="card-text" style="font-family: 'Georgia', serif;"><strong>MemberID:</strong> {{ member.teamMemberID }}</p>
-                                <p class="card-text" style="font-family: 'Georgia', serif;"><strong>Position:</strong> {{ member.position }}</p>
-                                <p class="card-text" style="font-family: 'Georgia', serif;"><strong>Bio:</strong> {{ member.bio }}</p>
-                                <p class="card-text" style="font-family: 'Georgia', serif;">
-                                    <strong>Social Link:</strong>
-                                    <a href="{{ member.socialLinks }}" target="_blank" style="color: #0d6efd;">Visit Profile</a>
-                                </p>
+    <!-- Page Header -->
+    <header class="page-header team-header">
+        <div class="container">
+            <h1 class="text-center">Our Team</h1>
+            <p class="lead text-center">Meet the dedicated members behind UAP Cyber Security Club</p>
+        </div>
+    </header>
+
+    <!-- Team Categories -->
+    <section class="team-categories py-4">
+        <div class="container">
+            <div class="category-filters text-center">
+                <button class="filter-btn active" data-filter="all">All Members</button>
+                <button class="filter-btn" data-filter="executive">Executive Board</button>
+                <button class="filter-btn" data-filter="technical">Technical Team</button>
+                <button class="filter-btn" data-filter="research">Research Team</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Members Section -->
+    <section class="team-members py-5">
+        <div class="container">
+            <!-- Executive Board -->
+            <div class="team-group mb-5">
+                <h2 class="section-title">Executive Board</h2>
+                <div class="row g-4">
+                    <!-- President -->
+                    <div class="col-lg-4 col-md-6" data-category="executive">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <img src="images/team/president.jpg" alt="Club President">
+                                    <h3>John Doe</h3>
+                                    <p class="position">Club President</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <h3>John Doe</h3>
+                                    <p class="position">Club President</p>
+                                    <p class="bio">Cybersecurity enthusiast with expertise in penetration testing and network security.</p>
+                                    <div class="social-links">
+                                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Vice President -->
+                    <div class="col-lg-4 col-md-6" data-category="executive">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <img src="images/team/vice-president.jpg" alt="Vice President">
+                                    <h3>Jane Smith</h3>
+                                    <p class="position">Vice President</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <h3>Jane Smith</h3>
+                                    <p class="position">Vice President</p>
+                                    <p class="bio">Specializes in cybersecurity policy and governance with a background in risk assessment.</p>
+                                    <div class="social-links">
+                                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Secretary -->
+                    <div class="col-lg-4 col-md-6" data-category="executive">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <img src="images/team/secretary.jpg" alt="Secretary">
+                                    <h3>Michael Chen</h3>
+                                    <p class="position">Secretary</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <h3>Michael Chen</h3>
+                                    <p class="position">Secretary</p>
+                                    <p class="bio">Focused on digital forensics and incident response with certification in computer security.</p>
+                                    <div class="social-links">
+                                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+            
+            <!-- Technical Team -->
+            <div class="team-group mb-5">
+                <h2 class="section-title">Technical Team</h2>
+                <div class="row g-4">
+                    <!-- Technical Lead -->
+                    <div class="col-lg-4 col-md-6" data-category="technical">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <img src="images/team/tech-lead.jpg" alt="Technical Lead">
+                                    <h3>Alex Johnson</h3>
+                                    <p class="position">Technical Lead</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <h3>Alex Johnson</h3>
+                                    <p class="position">Technical Lead</p>
+                                    <p class="bio">Specialized in web application security and CTF competition design.</p>
+                                    <div class="social-links">
+                                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Network Security Specialist -->
+                    <div class="col-lg-4 col-md-6" data-category="technical">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <img src="images/team/network-specialist.jpg" alt="Network Security Specialist">
+                                    <h3>Sarah Lee</h3>
+                                    <p class="position">Network Security Specialist</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <h3>Sarah Lee</h3>
+                                    <p class="position">Network Security Specialist</p>
+                                    <p class="bio">Expert in network protocols and firewall configurations with CCNA certification.</p>
+                                    <div class="social-links">
+                                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add technical team members -->
+                </div>
+            </div>
+            
+            <!-- Research Team -->
+            <div class="team-group">
+                <h2 class="section-title">Research Team</h2>
+                <div class="row g-4">
+                    <!-- Research Lead -->
+                    <div class="col-lg-4 col-md-6" data-category="research">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <img src="images/team/research-lead.jpg" alt="Research Lead">
+                                    <h3>David Park</h3>
+                                    <p class="position">Research Lead</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <h3>David Park</h3>
+                                    <p class="position">Research Lead</p>
+                                    <p class="bio">Focuses on emerging threats and cutting-edge security research in AI security.</p>
+                                    <div class="social-links">
+                                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cryptography Specialist -->
+                    <div class="col-lg-4 col-md-6" data-category="research">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <img src="images/team/crypto-specialist.jpg" alt="Cryptography Specialist">
+                                    <h3>Priya Sharma</h3>
+                                    <p class="position">Cryptography Specialist</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <h3>Priya Sharma</h3>
+                                    <p class="position">Cryptography Specialist</p>
+                                    <p class="bio">Researches advanced cryptographic protocols and blockchain security applications.</p>
+                                    <div class="social-links">
+                                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add research team members -->
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
+    
+    <!-- Join the Team Section -->
+    <section class="join-team py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="join-content">
+                        <h2>Want to Join Our Team?</h2>
+                        <p class="lead mb-4">We're always looking for passionate individuals to join our club.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Learn from experienced members</li>
+                            <li><i class="fas fa-check-circle"></i> Work on real-world projects</li>
+                            <li><i class="fas fa-check-circle"></i> Participate in competitions</li>
+                            <li><i class="fas fa-check-circle"></i> Build your network</li>
+                        </ul>
+                        <a href="/#contact" class="btn btn-primary btn-lg mt-4">Get in Touch</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="join-image">
+                        <img src="images/join-team.jpg" alt="Join Our Team" class="img-fluid rounded shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <img src="images/logo.png" alt="UAP Cyber Security Club Logo" class="footer-logo mb-3">
+                    <h5>UAP Cyber Security Club</h5>
+                    <p>Empowering students with cybersecurity knowledge and skills.</p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Home</a></li>
+                        <li><a href="events.html" class="text-white">Events</a></li>
+                        <li><a href="team.html" class="text-white">Team</a></li>
+                        <li><a href="achievements.html" class="text-white">Achievements</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <h5>Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-{% endblock %}
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    const teamCards = document.querySelectorAll('[data-category]');
+                    
+                    teamCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
