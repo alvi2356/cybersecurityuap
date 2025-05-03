@@ -1,13 +1,18 @@
 {% load static %}
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Events | UAP Cyber Security Club</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Particles.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+
   <style>
     /* Base styles */
     * {
@@ -17,65 +22,84 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     }
 
+    :root {
+      --primary-color: #0a192f;
+      --secondary-color: #64ffda;
+      --accent-color: #112240;
+      --text-color: #8892b0;
+      --light-blue: #00b4d8;
+      --dark-blue: #0a192f;
+      --neon-blue: #00fff2;
+      --light-bg: #f8f9fa;
+    }
+
     body {
       background: #0a192f;
       color: #fff;
       line-height: 1.6;
+      padding-top: 76px; /* Account for fixed navbar */
     }
 
-    /* Header styles */
-    header {
-      background-color: #05091a;
-      padding: 1rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    /* Navigation */
+    .navbar {
+      background: rgba(10, 25, 47, 0.95); /* subtle transparency */
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      border-radius: 0 0 18px 18px;
+      padding: 12px 0;
+      transition: background 0.3s, box-shadow 0.3s;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo img {
-      width: 40px;
-      margin-right: 10px;
-    }
-
-    .logo-text {
-      font-weight: 700;
+    .navbar .navbar-brand span {
+      font-weight: bold;
       color: #fff;
-      font-size: 1.1rem;
+      letter-spacing: 1px;
     }
 
-    .logo-text span {
-      color: #37CDBE;
+    .navbar-nav .nav-link {
+      color: #e0e6ed !important;
+      margin: 0 8px;
+      font-weight: 500;
+      border-radius: 6px;
+      padding: 6px 16px;
+      transition: background 0.2s, color 0.2s;
     }
 
-    nav ul {
-      display: flex;
-      list-style: none;
+    .navbar-nav .nav-link.active, .navbar-nav .nav-link:hover {
+      background: #233554;
+      color: #64ffda !important;
     }
 
-    nav ul li {
-      margin-left: 2rem;
+    .navbar-toggler {
+      border: none;
     }
 
-    nav ul li a {
-      color: #b4b9c4;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-size: 0.95rem;
+    .navbar-toggler:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #64ffda44;
     }
 
-    nav ul li a:hover, nav ul li a.active {
-      color: #fff;
+    @media (max-width: 991px) {
+      .navbar {
+        border-radius: 0;
+      }
+      .navbar-nav .nav-link {
+        margin: 4px 0;
+      }
     }
 
-    nav ul li a.active {
-      border-bottom: 2px solid #37CDBE;
-      padding-bottom: 5px;
+    /* Logo styles */
+    .navbar-logo {
+      height: 40px;
+      width: auto;
+      max-width: 40px;
+      object-fit: contain;
+    }
+
+    @media (max-width: 768px) {
+      .navbar-logo {
+        height: 32px;
+        max-width: 32px;
+      }
     }
 
     /* Hero section */
@@ -118,13 +142,9 @@
     }
 
     .filter-btn:hover, .filter-btn.active {
-      background-color: #37CDBE;
-      border-color: #37CDBE;
-    }
-
-    .filter-btn.active {
-      background-color: #37CDBE;
-      border-color: #37CDBE;
+      background-color: #64ffda;
+      border-color: #64ffda;
+      color: #0a192f;
     }
 
     /* Events container */
@@ -255,7 +275,7 @@
       position: absolute;
       top: 1rem;
       left: 1rem;
-      background-color: #37CDBE;
+      background-color: #64ffda;
       color: #05091a;
       text-align: center;
       padding: 0.5rem;
@@ -302,138 +322,35 @@
 
     /* Footer */
     footer {
-      background-color:  rgba(17, 34, 64, 0.7);
-      padding: 3rem 0;
+      background-color: #05091a;
+      padding: 4rem 0 1rem;
       margin-top: 4rem;
       border-top: 1px solid rgba(100, 255, 218, 0.1);
     }
 
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 2rem;
-    }
-
     .footer-logo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .footer-logo img {
-      width: 60px;
+      width: 80px;
+      height: auto;
+      max-width: 80px;
+      object-fit: contain;
       margin-bottom: 1rem;
     }
 
-    .footer-logo h3 {
-      margin-bottom: 1rem;
+    @media (max-width: 768px) {
+      .footer-logo {
+        width: 60px;
+        max-width: 60px;
+      }
     }
 
-    .footer-logo p {
-      color: #b4b9c4;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-
-    .footer-links h3, .footer-social h3, .footer-contact h3 {
-      margin-bottom: 1.5rem;
+    .social-links a {
+      transition: all 0.3s ease;
       font-size: 1.2rem;
     }
 
-    .footer-links ul, .footer-contact ul {
-      list-style: none;
-    }
-
-    .footer-links ul li, .footer-contact ul li {
-      margin-bottom: 0.8rem;
-    }
-
-    .footer-links ul li a {
-      color: #b4b9c4;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .footer-links ul li a:hover {
-      color: #37CDBE;
-    }
-
-    .footer-contact ul li {
-      color: #b4b9c4;
-      display: flex;
-      align-items: center;
-    }
-
-    .footer-contact ul li i {
-      margin-right: 0.8rem;
-      color: #37CDBE;
-      width: 16px;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .social-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: rgba(59, 130, 246, 0.1);
-      color: #fff;
-      transition: all 0.3s ease;
-    }
-
-    .social-icon:hover {
-      background-color: #37CDBE;
-      color: #05091a;
-    }
-
-    .uap-link {
-      color: #37CDBE;
-      text-decoration: none;
-      transition: color 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      margin-top: 1rem;
-    }
-
-    .uap-link i {
-      margin-left: 0.5rem;
-    }
-
-    .uap-link:hover {
-      color: #64ffda;
-    }
-
-    .copyright {
-      text-align: center;
-      margin-top: 2rem;
-      color: #b4b9c4;
-      font-size: 0.9rem;
-    }
-
-    .designers {
-      text-align: center;
-      margin-top: 1rem;
-      color: #b4b9c4;
-      font-size: 0.8rem;
-    }
-
-    .designers a {
-      color: #37CDBE;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .designers a:hover {
-      color: #64ffda;
+    .social-links a:hover {
+      color: var(--secondary-color) !important;
+      transform: translateY(-3px);
     }
 
     /* Particles background */
@@ -446,18 +363,15 @@
       z-index: -1;
     }
 
-    /* Responsive styles */
-    @media (max-width: 992px) {
-      .footer-container {
-        grid-template-columns: 1fr 1fr;
-      }
+    /* No events styles */
+    .no-events h2, .no-events p {
+      color: #b4b9c4 !important;
+      text-align: center;
+      padding: 2rem 0;
     }
 
+    /* Responsive styles for featured event */
     @media (max-width: 768px) {
-      nav ul {
-        display: none;
-      }
-
       .featured-event {
         flex-direction: column;
       }
@@ -469,46 +383,37 @@
       .featured-event-image {
         height: 200px;
       }
-
-      .footer-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .footer-contact ul li {
-        justify-content: center;
-      }
-
-      .social-icons {
-        justify-content: center;
-      }
-    }
-
-    .no-events h2, .no-events p {
-      color: #b4b9c4 !important;
     }
   </style>
 </head>
 <body>
   <div id="particles-js"></div>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">
-      <img src="/api/placeholder/40/40" alt="UAP Cyber Security Logo">
-      <div class="logo-text">UAP <span>Cyber Security</span> Club</div>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Club Logo" class="navbar-logo me-2">
+        <span>UAP Cyber Security Club</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'events' %}active{% endif %}" href="{% url 'events' %}">Events</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'team' %}active{% endif %}" href="{% url 'team' %}">Team</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'achievements' %}active{% endif %}" href="{% url 'achievements' %}">Achievements</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'formerpresident' %}active{% endif %}" href="{% url 'formerpresident' %}">Former Presidents</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
+
+
+
+        </ul>
+      </div>
     </div>
-    <nav>
-      <ul>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'events' %}" class="active">Events</a></li>
-        <li><a href="{% url 'team' %}">Team</a></li>
-        <li><a href="{% url 'achievements' %}">Achievements</a></li>
-        <li><a href="{% url 'formerpresident' %}">Former Presidents</a></li>
-        <li><a href="{% url 'contact' %}">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+  </nav>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -532,9 +437,9 @@
     <div class="featured-event">
       <div class="featured-event-image">
         {% if events.0.image %}
-            <img src="{{ events.0.image.url }}" alt="{{ events.0.title }}">
+          <img src="{{ events.0.image.url }}" alt="{{ events.0.title }}">
         {% else %}
-            <img src="/static/images/events/default-event.jpg" alt="{{ events.0.title }}">
+          <img src="/static/images/events/default-event.jpg" alt="{{ events.0.title }}">
         {% endif %}
       </div>
       <div class="featured-event-content">
@@ -550,7 +455,6 @@
           <span>{{ events.0.location }}</span>
         </div>
         <a href="{% url 'event_register' events.0.eventID %}" class="btn">Register Now</a>
-
       </div>
     </div>
 
@@ -564,13 +468,11 @@
             <div class="day">{{ event.date|date:"d" }}</div>
             <div class="month">{{ event.date|date:"M"|upper }}</div>
           </div>
-          <div class="featured-event-image">
-            {% if event.image %}
-                <img src="{{ event.image.url }}" alt="{{ event.title }}">
-            {% else %}
-                <img src="/static/images/events/default-event.jpg" alt="{{ event.title }}">
-            {% endif %}
-          </div>
+          {% if event.image %}
+            <img src="{{ event.image.url }}" alt="{{ event.title }}">
+          {% else %}
+            <img src="/static/images/events/default-event.jpg" alt="{{ event.title }}">
+          {% endif %}
           <div class="event-card-content">
             <h3>{{ event.title }}</h3>
             <p>{{ event.description }}</p>
@@ -629,62 +531,63 @@
   </div>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-container">
-      <div class="footer-logo">
-        <img src="/static/images/logo.png" alt="UAP Cyber Security Club Logo">
-        <h3>UAP Cyber Security Club</h3>
-        <p>Empowering students with cybersecurity knowledge and skills.</p>
-      </div>
-
-      <div class="footer-links">
-        <h3>Quick Links</h3>
-        <ul>
-          <li><a href="{% url 'home' %}">Home</a></li>
-          <li><a href="{% url 'events' %}">Events</a></li>
-          <li><a href="{% url 'team' %}">Team</a></li>
-          <li><a href="{% url 'achievements' %}">Achievements</a></li>
-          <li><a href="{% url 'formerpresident' %}">Former Presidents</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-contact">
-        <h3>Contact Us</h3>
-        <ul>
-          <li><i class="fas fa-phone"></i> +880 1886922110</li>
-          <li><i class="fas fa-envelope"></i> cse.cybersecurity@uap-bd.edu</li>
-          <li><i class="fas fa-map-marker-alt"></i> 74/A, Green Road, Farmgate 1205 Dhaka, Dhaka Division, Bangladesh</li>
-        </ul>
-      </div>
-
-      <div class="footer-social">
-        <h3>Follow Us</h3>
-        <div class="social-icons">
-          <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-        </div>
-        <div>
-          <a href="https://www.uap-bd.edu/" class="uap-link" target="_blank">UAP <i class="fas fa-external-link-alt"></i></a>
-        </div>
-      </div>
-    </div>
-
+  <footer class="bg-dark text-white py-4">
     <div class="container">
-      <div class="copyright">
-        <small>&copy; {% now "Y" %} UAP Cyber Security Club. All rights reserved.</small>
+      <div class="row">
+        <div class="col-md-4 text-center mb-3 mb-md-0">
+          <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Club Logo" class="footer-logo mb-3">
+          <h5>UAP Cyber Security Club</h5>
+          <p>Empowering students with cybersecurity knowledge and skills.</p>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
+            <li><a href="{% url 'events' %}" class="text-white">Events</a></li>
+            <li><a href="{% url 'team' %}" class="text-white">Team</a></li>
+            <li><a href="{% url 'achievements' %}" class="text-white">Achievements</a></li>
+            <li><a href="{% url 'formerpresident' %}" class="text-white">Former Presidents</a></li>
+            <li><a href="{% url 'contact' %}" class="text-white">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 text-md-end">
+          <h5>Follow Us</h5>
+          <div class="social-links">
+            <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-github"></i></a>
+          </div>
+          <div class="mt-3">
+            <address class="mb-0 text-white-50">
+              <small>
+                <i class="fas fa-map-marker-alt me-1"></i> 74/A, Green Road, Farmgate<br>
+                Dhaka 1205, Bangladesh<br>
+                <i class="fas fa-envelope me-1"></i> cse.cybersecurity@uap-bd.edu<br>
+                <i class="fas fa-phone me-1"></i> +880 1886922110
+              </small>
+            </address>
+          </div>
+        </div>
       </div>
-      <div class="designers">
-        <small>Designed By:
-          <a href="https://MD-SAZID-HOSSAIN.github.io" target="_blank">Sazid</a>,
-          <a href="https://sabrina1806.github.io/" target="_blank">Sabrina</a>,
-          <a href="https://mahinchowdhury25.github.io/Portfolio/" target="_blank">Mahin</a>,
-          <a href="https://alvi2356.github.io/portfolio/" target="_blank">Alvi</a>
-        </small>
+      <div class="row mt-4">
+        <div class="col-12 text-center">
+          <small>&copy; {% now "Y" %} UAP Cyber Security Club. All rights reserved.</small>
+          <div class="mt-1">
+            <small>Designed By:
+              <a href="https://MD-SAZID-HOSSAIN.github.io" target="_blank" class="text-white-50">Sazid</a>,
+              <a href="https://sabrina1806.github.io/" target="_blank" class="text-white-50">Sabrina</a>,
+              <a href="https://mahinchowdhury25.github.io/Portfolio/" target="_blank" class="text-white-50">Mahin</a>,
+              <a href="https://alvi2356.github.io/portfolio/" target="_blank" class="text-white-50">Alvi</a>
+            </small>
+          </div>
+        </div>
       </div>
     </div>
   </footer>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
   <script>
     // Initialize particles.js
@@ -699,7 +602,7 @@
             }
           },
           "color": {
-            "value": "#37CDBE"
+            "value": "#64ffda"
           },
           "shape": {
             "type": "circle",
@@ -725,7 +628,7 @@
           "line_linked": {
             "enable": true,
             "distance": 150,
-            "color": "#37CDBE",
+            "color": "#64ffda",
             "opacity": 0.2,
             "width": 1
           },
