@@ -1,0 +1,588 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Registration | UAP Cyber Security Club</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background: #0a192f;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    /* Header styles */
+    header {
+      background-color: #05091a;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 40px;
+      margin-right: 10px;
+    }
+
+    .logo-text {
+      font-weight: 700;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+
+    .logo-text span {
+      color: #37CDBE;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin-left: 2rem;
+    }
+
+    nav ul li a {
+      color: #b4b9c4;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    nav ul li a:hover, nav ul li a.active {
+      color: #fff;
+    }
+
+    nav ul li a.active {
+      border-bottom: 2px solid #37CDBE;
+      padding-bottom: 5px;
+    }
+
+    /* Hero section */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem;
+      background-color: #070e1e;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      color: #b4b9c4;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    /* Event Info */
+    .event-info {
+      background: #112240;
+      border: 1px solid rgba(100,255,218,0.10);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .event-image {
+      flex: 0 0 100px;
+      height: 100px;
+      overflow: hidden;
+      border-radius: 0.5rem;
+    }
+
+    .event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .event-details h2 {
+      color: #64ffda;
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    .event-details .event-meta {
+      display: flex;
+      align-items: center;
+      color: #b4b9c4;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .event-details .event-meta i {
+      color: #64ffda;
+      margin-right: 0.5rem;
+      width: 16px;
+    }
+
+    /* Registration Form */
+    .form-container {
+      background: #112240;
+      border: 1px solid rgba(100,255,218,0.10);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+    }
+
+    .form-title {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #64ffda;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #b4b9c4;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(17, 34, 64, 0.8);
+      border: 1px solid rgba(100,255,218,0.20);
+      border-radius: 0.5rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #64ffda;
+      box-shadow: 0 0 0 2px rgba(100,255,218,0.2);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .checkbox-group input {
+      margin-right: 0.5rem;
+      cursor: pointer;
+      accent-color: #64ffda;
+    }
+
+    .checkbox-group label {
+      margin-bottom: 0;
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(17, 34, 64, 0.8);
+      border: 1px solid rgba(100,255,218,0.20);
+      border-radius: 0.5rem;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .form-select option {
+      background: #0a192f;
+    }
+
+    .btn-register {
+      background: transparent;
+      color: #64ffda;
+      border: 1px solid #64ffda;
+      padding: 0.8rem 1.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .btn-register:hover {
+      background: #64ffda;
+      color: #0a192f;
+    }
+
+    /* Required Fields */
+    .required-text {
+      display: block;
+      color: #b4b9c4;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      text-align: right;
+    }
+
+    .required-field::after {
+      content: " *";
+      color: #64ffda;
+    }
+
+    /* Success Message */
+    .message {
+      background: rgba(100,255,218,0.10);
+      border: 1px solid #64ffda;
+      color: #64ffda;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .error {
+      background: rgba(255,100,100,0.10);
+      border: 1px solid #ff6464;
+      color: #ff6464;
+    }
+
+    /* Back Button */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      color: #b4b9c4;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .back-link i {
+      margin-right: 0.5rem;
+    }
+
+    .back-link:hover {
+      color: #64ffda;
+    }
+
+    /* Footer */
+    footer {
+      background-color: rgba(17, 34, 64, 0.7);
+      padding: 2rem 0;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(100, 255, 218, 0.1);
+      text-align: center;
+    }
+
+    .copyright {
+      color: #b4b9c4;
+      font-size: 0.9rem;
+    }
+
+    /* Particles background */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+      }
+
+      .event-info {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .event-image {
+        flex: 0 0 auto;
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+      }
+
+      .event-details .event-meta {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Logo">
+      <div class="logo-text">UAP <span>Cyber Security</span> Club</div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'events' %}" class="active">Events</a></li>
+        <li><a href="{% url 'team' %}">Team</a></li>
+        <li><a href="{% url 'achievements' %}">Achievements</a></li>
+        <li><a href="{% url 'formerpresident' %}">Former Presidents</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Event Registration</h1>
+    <p>Register now to secure your spot in our upcoming event</p>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container">
+    <a href="{% url 'events' %}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Events</a>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message {% if message.tags == 'error' %}error{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <!-- Event Info -->
+    <div class="event-info">
+      <div class="event-image">
+        {% if event.image %}
+          <img src="{{ event.image.url }}" alt="{{ event.title }}">
+        {% else %}
+          <img src="{% static 'images/events/default-event.jpg' %}" alt="{{ event.title }}">
+        {% endif %}
+      </div>
+      <div class="event-details">
+        <h2>{{ event.title }}</h2>
+        <div class="event-meta">
+          <i class="fas fa-calendar-alt"></i>
+          <span>{{ event.date|date:"F d, Y" }}</span>
+        </div>
+        <div class="event-meta">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>{{ event.location }}</span>
+        </div>
+        <div class="event-meta">
+          <i class="fas fa-users"></i>
+          <span>Capacity: {{ event.capacity }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="form-container">
+      <h2 class="form-title">Registration Form</h2>
+      <span class="required-text">* Required fields</span>
+
+      <form method="POST" action="{% url 'event_register' event.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="fullName" class="required-field">Full Name</label>
+          <input type="text" id="fullName" name="fullName" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="studentId" class="required-field">Student ID</label>
+          <input type="text" id="studentId" name="studentId" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="required-field">Email Address</label>
+          <input type="email" id="email" name="email" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone" class="required-field">Phone Number</label>
+          <input type="tel" id="phone" name="phone" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="department">Department</label>
+          <select id="department" name="department" class="form-select">
+            <option value="">Select your department</option>
+            <option value="CSE">Computer Science & Engineering</option>
+            <option value="EEE">Electrical & Electronic Engineering</option>
+            <option value="Civil">Civil Engineering</option>
+            <option value="BBA">Business Administration</option>
+            <option value="English">English</option>
+            <option value="Architecture">Architecture</option>
+            <option value="Pharmacy">Pharmacy</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="semester">Current Semester</label>
+          <select id="semester" name="semester" class="form-select">
+            <option value="">Select your semester</option>
+            <option value="1">1st Semester</option>
+            <option value="2">2nd Semester</option>
+            <option value="3">3rd Semester</option>
+            <option value="4">4th Semester</option>
+            <option value="5">5th Semester</option>
+            <option value="6">6th Semester</option>
+            <option value="7">7th Semester</option>
+            <option value="8">8th Semester</option>
+            <option value="9">9th Semester</option>
+            <option value="10">10th Semester</option>
+            <option value="11">11th Semester</option>
+            <option value="12">12th Semester</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Previous Experience in Cyber Security</label>
+          <div class="checkbox-group">
+            <input type="radio" id="experience-yes" name="experience" value="yes">
+            <label for="experience-yes">Yes</label>
+          </div>
+          <div class="checkbox-group">
+            <input type="radio" id="experience-no" name="experience" value="no" checked>
+            <label for="experience-no">No</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="expectations">What do you expect to learn from this event?</label>
+          <textarea id="expectations" name="expectations" class="form-input" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms" class="required-field">I agree to the terms and conditions</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-register">Register Now</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="copyright">
+      <small>&copy; {% now "Y" %} UAP Cyber Security Club. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize particles.js
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS('particles-js', {
+        "particles": {
+          "number": {
+            "value": 50,
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": "#37CDBE"
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
+            }
+          },
+          "opacity": {
+            "value": 0.2,
+            "random": false,
+            "anim": {
+              "enable": false
+            }
+          },
+          "size": {
+            "value": 3,
+            "random": true,
+            "anim": {
+              "enable": false
+            }
+          },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#37CDBE",
+            "opacity": 0.2,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 1,
+            "direction": "none",
+            "random": false,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": true,
+              "mode": "grab"
+            },
+            "onclick": {
+              "enable": true,
+              "mode": "push"
+            },
+            "resize": true
+          },
+          "modes": {
+            "grab": {
+              "distance": 140,
+              "line_linked": {
+                "opacity": 1
+              }
+            },
+            "push": {
+              "particles_nb": 4
+            }
+          }
+        },
+        "retina_detect": true
+      });
+    });
+  </script>
+</body>
+</html>
