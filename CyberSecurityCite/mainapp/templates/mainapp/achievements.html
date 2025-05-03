@@ -188,7 +188,11 @@
             --primary-color: #0a192f;
             --secondary-color: #64ffda;
             --accent-color: #112240;
-            --text-color: #b4b9c4;
+            --text-color: #8892b0;
+            --light-blue: #00b4d8;
+            --dark-blue: #0a192f;
+            --neon-blue: #00fff2;
+            --light-bg: #f8f9fa;
         }
 
         /* General Styles */
@@ -196,10 +200,6 @@
             background: var(--primary-color) !important;
             color: var(--text-color) !important;
             font-family: 'Calibre', sans-serif;
-        }
-
-        .navbar-logo {
-            height: 40px;
         }
 
         /* Timeline Styles */
@@ -397,80 +397,95 @@
             border: 2px solid var(--secondary-color);
         }
 
-        /* Footer Styles - UPDATED FOR WHITE TEXT */
-        footer {
-            background: var(--primary-color) !important;
-            border-top: 1px solid rgba(100,255,218,0.10);
-            color: #fff !important;
+        /* Navigation */
+        .navbar {
+            background: rgba(10, 25, 47, 0.95); /* subtle transparency */
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border-radius: 0 0 18px 18px;
+            padding: 12px 0;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .navbar .navbar-brand span {
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        .navbar-nav .nav-link {
+            color: #e0e6ed !important;
+            margin: 0 8px;
+            font-weight: 500;
+            border-radius: 6px;
+            padding: 6px 16px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .navbar-nav .nav-link.active, .navbar-nav .nav-link:hover {
+            background: #233554;
+            color: #64ffda !important;
+        }
+        .navbar-toggler {
+            border: none;
+        }
+        .navbar-toggler:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #64ffda44;
+        }
+        @media (max-width: 991px) {
+            .navbar {
+                border-radius: 0;
+            }
+            .navbar-nav .nav-link {
+                margin: 4px 0;
+            }
         }
 
-        footer h4 {
-            color: var(--secondary-color) !important;
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        footer .list-unstyled li a {
-            color: #fff !important;
-            text-decoration: none;
-        }
-
-        footer .list-unstyled li a:hover,
-        .social-links a:hover i {
-            color: var(--secondary-color) !important;
-            text-decoration: none;
-        }
-
-        footer .text-muted {
-            color: #fff !important;
-        }
-
-        footer .fas, footer .fab {
-            transition: all 0.3s ease;
-        }
-
-        footer .social-links a i {
-            color: #fff !important;
-        }
-
-        footer p.small a {
-            color: #fff !important;
-        }
-
-        footer .list-unstyled li {
-            color: #fff !important;
-        }
-
-        .footer-logo {
-            height: 60px;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 40px;
+        /* Logo styles */
+        .navbar-logo {
             height: 40px;
-            border-radius: 50%;
-            background: rgba(100, 255, 218, 0.1);
-            border: 1px solid rgba(100, 255, 218, 0.3);
-            margin-left: 0.5rem;
+            width: auto;
+            max-width: 40px;
+            object-fit: contain;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-logo {
+                height: 32px;
+                max-width: 32px;
+            }
+        }
+
+        /* Footer styles */
+        .footer-logo {
+            width: 80px;
+            height: auto;
+            max-width: 80px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-logo {
+                width: 60px;
+                max-width: 60px;
+            }
+        }
+
+        /* Social links in footer */
+        .social-links a {
             transition: all 0.3s ease;
         }
 
         .social-links a:hover {
-            background: rgba(100, 255, 218, 0.2);
-            transform: translateY(-5px);
+            color: var(--secondary-color) !important;
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-                <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Logo" class="navbar-logo me-2">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Club Logo" class="navbar-logo me-2">
                 <span>UAP Cyber Security Club</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -484,6 +499,12 @@
                     <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'achievements' %}active{% endif %}" href="{% url 'achievements' %}">Achievements</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'formerpresident' %}active{% endif %}" href="{% url 'formerpresident' %}">Former Presidents</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'register' %}active{% endif %}" href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -591,64 +612,61 @@
         </div>
     </section>
 
-  <!-- Statistics Section -->
-<section class="achievement-stats py-5 text-center">
-    <div class="container">
-        <div class="row justify-content-center g-4">
-            <div class="col-md-3 col-6 d-flex justify-content-center">
-                <div class="stat-card">
-                    <i class="fas fa-trophy fa-3x mb-3"></i>
-                    <h3 class="counter">10</h3>
-                    <p>Total Achievements</p>
+    <!-- Statistics Section -->
+    <section class="achievement-stats py-5 text-center">
+        <div class="container">
+            <div class="row justify-content-center g-4">
+                <div class="col-md-3 col-6 d-flex justify-content-center">
+                    <div class="stat-card">
+                        <i class="fas fa-trophy fa-3x mb-3"></i>
+                        <h3 class="counter">10</h3>
+                        <p>Total Achievements</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-6 d-flex justify-content-center">
-                <div class="stat-card">
-                    <i class="fas fa-certificate fa-3x mb-3"></i>
-                    <h3 class="counter">7</h3>
-                    <p>Years of Excellence</p>
+                <div class="col-md-3 col-6 d-flex justify-content-center">
+                    <div class="stat-card">
+                        <i class="fas fa-certificate fa-3x mb-3"></i>
+                        <h3 class="counter">7</h3>
+                        <p>Years of Excellence</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-
-    <!-- Footer - NOW WITH WHITE TEXT -->
-    <footer class="py-5">
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="mb-4">
-                        <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Club Logo" class="footer-logo" style="height: 60px; width: auto;">
-                        <h4 class="mb-3 mt-3">UAP Cyber Security Club</h4>
-                        <p>Empowering students with cybersecurity knowledge and skills.</p>
-                    </div>
+            <div class="row">
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Club Logo" class="footer-logo mb-3">
+                    <h5>UAP Cyber Security Club</h5>
+                    <p>Empowering students with cybersecurity knowledge and skills.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <h4 class="mb-4">Quick Links</h4>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="{% url 'home' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Home</a></li>
-                        <li class="mb-2"><a href="{% url 'events' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Events</a></li>
-                        <li class="mb-2"><a href="{% url 'team' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Team</a></li>
-                        <li class="mb-2"><a href="{% url 'achievements' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Achievements</a></li>
-                        <li class="mb-2"><a href="{% url 'formerpresident' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Former Presidents</a></li>
-                        <li class="mb-2"><a href="{% url 'contact' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Contact</a></li>
+                        <li class="mb-2"><a href="{% url 'home' %}" class="text-white text-decoration-none"><i class="fas fa-angle-right me-2"></i>Home</a></li>
+                        <li class="mb-2"><a href="{% url 'events' %}" class="text-white text-decoration-none"><i class="fas fa-angle-right me-2"></i>Events</a></li>
+                        <li class="mb-2"><a href="{% url 'team' %}" class="text-white text-decoration-none"><i class="fas fa-angle-right me-2"></i>Team</a></li>
+                        <li class="mb-2"><a href="{% url 'achievements' %}" class="text-white text-decoration-none"><i class="fas fa-angle-right me-2"></i>Achievements</a></li>
+                        <li class="mb-2"><a href="{% url 'formerpresident' %}" class="text-white text-decoration-none"><i class="fas fa-angle-right me-2"></i>Former Presidents</a></li>
+                        <li class="mb-2"><a href="{% url 'contact' %}" class="text-white text-decoration-none"><i class="fas fa-angle-right me-2"></i>Contact</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4">
-                    <h4 class="mb-4">Contact Us</h4>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>74/A, Green Road, Farmgate 1205 Dhaka, Dhaka Division, Bangladesh</li>
                         <li class="mb-2"><i class="fas fa-envelope me-2"></i>cse.cybersecurity@uap-bd.edu</li>
                         <li class="mb-2"><i class="fas fa-phone me-2"></i>+880 1886922110</li>
-                        <li class="mb-3"><a href="https://www.uap-bd.edu/" class="text-decoration-none" target="_blank">UAP <i class="fas fa-external-link-alt ms-1"></i></a></li>
+                        <li class="mb-3"><a href="https://www.uap-bd.edu/" class="text-white text-decoration-none" target="_blank">UAP <i class="fas fa-external-link-alt ms-1"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -660,10 +678,10 @@
                 <div class="col-md-6 text-center text-md-end">
                     <p class="small">
                         Designed By:
-                        <a href="https://MD-SAZID-HOSSAIN.github.io" target="_blank">Sazid</a>,
-                        <a href="https://sabrina1806.github.io/" target="_blank">Sabrina</a>,
-                        <a href="https://mahinchowdhury25.github.io/Portfolio/" target="_blank">Mahin</a>,
-                        <a href="https://alvi2356.github.io/portfolio/" target="_blank">Alvi</a>
+                        <a href="https://MD-SAZID-HOSSAIN.github.io" target="_blank" class="text-white">Sazid</a>,
+                        <a href="https://sabrina1806.github.io/" target="_blank" class="text-white">Sabrina</a>,
+                        <a href="https://mahinchowdhury25.github.io/Portfolio/" target="_blank" class="text-white">Mahin</a>,
+                        <a href="https://alvi2356.github.io/portfolio/" target="_blank" class="text-white">Alvi</a>
                     </p>
                 </div>
             </div>
