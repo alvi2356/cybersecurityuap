@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Event, Achievement, TeamMember, FormerPresident, EventRegistration
 from django.contrib import messages
 from datetime import date
+from django.db.utils import IntegrityError
 
 
 def home(request):
@@ -28,7 +29,7 @@ def events(request):
 
 
 def event_register(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
+    event = get_object_or_404(Event, eventID=event_id)
 
     if request.method == 'POST':
         # Extract form data
@@ -41,27 +42,37 @@ def event_register(request, event_id):
         experience = request.POST.get('experience') == 'yes'
         expectations = request.POST.get('expectations')
 
-        # Create registration in database
-        registration = EventRegistration(
-            event=event,
-            full_name=full_name,
-            student_id=student_id,
-            email=email,
-            phone=phone,
-            department=department,
-            semester=semester,
-            has_experience=experience,
-            expectations=expectations
-        )
-        registration.save()
+        # Check if student is already registered for this event
+        existing_registration = EventRegistration.objects.filter(event=event, student_id=student_id).exists()
+        if existing_registration:
+            messages.error(request, "You have already registered for this event.")
+            return redirect('event_register', event_id=event_id)
+            
+        try:
+            # Create registration in database
+            registration = EventRegistration(
+                event=event,
+                full_name=full_name,
+                student_id=student_id,
+                email=email,
+                phone=phone,
+                department=department,
+                semester=semester,
+                has_experience=experience,
+                expectations=expectations
+            )
+            registration.save()
 
-        messages.success(request, "Registration successful! We'll contact you with more details soon.")
-        return redirect('event_register', event_id=event_id)
+            messages.success(request, "Registration successful! We'll contact you with more details soon.")
+            return redirect('event_register', event_id=event.eventID)
+        except IntegrityError:
+            messages.error(request, "You have already registered for this event.")
+            return redirect('event_register', event_id=event_id)
 
     context = {
         'event': event
     }
-    return render(request, 'mainapp/event_register.html', context)
+    return render(request, 'mainapp/eventregistration.html', context)
 
 
 def achievements(request):

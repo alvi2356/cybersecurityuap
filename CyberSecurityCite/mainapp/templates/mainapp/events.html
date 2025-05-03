@@ -549,7 +549,7 @@
           <i class="fas fa-map-marker-alt"></i>
           <span>{{ events.0.location }}</span>
         </div>
-        <a href="{% url 'event_register' events.0.id %}" class="btn">Register Now</a>
+        <a href="{% url 'event_register' events.0.eventID %}" class="btn">Register Now</a>
 
       </div>
     </div>
@@ -586,7 +586,7 @@
               <i class="fas fa-users"></i>
               <span>Capacity: {{ event.capacity }}</span>
             </div>
-            <a href="{% url 'event_register' event.id %}" class="btn">Register Now</a>
+            <a href="{% url 'event_register' event.eventID %}" class="btn">Register Now</a>
           </div>
         </div>
         {% endif %}

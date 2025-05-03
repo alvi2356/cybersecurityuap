@@ -12,16 +12,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='FormerPresident',
-            fields=[
-                ('formerPresidentID', models.AutoField(primary_key=True, serialize=False)),
-                ('position', models.CharField(max_length=100)),
-                ('semester', models.CharField(max_length=20)),
-                ('socialLinks', models.TextField(blank=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mainapp.user')),
-            ],
-        ),
-        migrations.CreateModel(
             name='EventRegistration',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
