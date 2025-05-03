@@ -1,3 +1,6 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +12,19 @@
     <style>
         /* Achievement Cards */
         .achievement-card {
-            background: linear-gradient(145deg, var(--accent-color), rgba(17, 34, 64, 0.9));
+            background: var(--accent-color) !important;
             padding: 2.5rem;
-            border-radius: 20px;
+            border-radius: 1.5rem !important;
             text-align: center;
-            border: 1px solid rgba(100, 255, 218, 0.2);
+            border: 1px solid rgba(100,255,218,0.10) !important;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
             height: 100%;
             z-index: 2;
             backdrop-filter: blur(10px);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10) !important;
+            color: #fff !important;
         }
 
         .achievement-card::before {
@@ -41,8 +46,8 @@
 
         .achievement-card:hover {
             transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
-            border-color: rgba(100, 255, 218, 0.4);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18) !important;
+            border-color: #64ffda44 !important;
         }
 
         .achievement-card:hover::before {
@@ -57,14 +62,14 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: rgba(100, 255, 218, 0.1);
+            background: rgba(100,255,218,0.10) !important;
             margin-bottom: 1.5rem;
             transition: all 0.3s ease;
         }
 
         .achievement-icon i {
             font-size: 2.5rem;
-            color: var(--secondary-color);
+            color: var(--secondary-color) !important;
             text-shadow: 0 0 15px rgba(100, 255, 218, 0.7);
             transition: all 0.3s ease;
         }
@@ -74,12 +79,14 @@
             background: rgba(100, 255, 218, 0.2);
         }
 
-        .achievement-card h3 {
-            color: white;
+        .achievement-card h3, .achievements-section .section-header h2 {
+            color: var(--secondary-color) !important;
             font-size: 1.8rem;
             margin-bottom: 1rem;
             font-weight: 600;
             transition: all 0.3s ease;
+            background: none !important;
+            -webkit-text-fill-color: unset !important;
         }
 
         .achievement-card p {
@@ -98,10 +105,10 @@
         }
 
         .achievement-details .badge {
-            background: rgba(100, 255, 218, 0.1) !important;
-            color: var(--secondary-color);
+            background: rgba(100,255,218,0.10) !important;
+            color: var(--secondary-color) !important;
             padding: 0.6rem 1.2rem;
-            border: 1px solid rgba(100, 255, 218, 0.3);
+            border: 1px solid rgba(100,255,218,0.3) !important;
             border-radius: 25px;
             font-size: 0.9rem;
             font-weight: 500;
@@ -109,7 +116,7 @@
         }
 
         .achievement-details .badge:hover {
-            background: rgba(100, 255, 218, 0.2) !important;
+            background: rgba(100,255,218,0.20) !important;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
         }
@@ -140,9 +147,9 @@
         }
 
         .filter-btn {
-            background: transparent;
-            color: #ccc;
-            border: 1px solid rgba(100, 255, 218, 0.3);
+            color: var(--secondary-color) !important;
+            border-color: var(--secondary-color) !important;
+            background: transparent !important;
             padding: 0.5rem 1.2rem;
             margin: 0 0.5rem 1rem;
             border-radius: 25px;
@@ -150,19 +157,18 @@
             transition: all 0.3s ease;
         }
 
-        .filter-btn:hover, .filter-btn.active {
-            background: rgba(100, 255, 218, 0.1);
-            color: var(--secondary-color);
-            border-color: rgba(100, 255, 218, 0.5);
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--secondary-color) !important;
+            color: #0a192f !important;
         }
 
         /* Page Header */
         .page-header {
             padding: 8rem 0 4rem;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('images/achievements-bg.jpg');
+            background: linear-gradient(135deg, #0a192f 0%, #1a365d 100%) !important;
             background-size: cover;
             background-position: center;
-            color: white;
+            color: #fff !important;
         }
 
         .page-header h1 {
@@ -182,13 +188,13 @@
             --primary-color: #0a192f;
             --secondary-color: #64ffda;
             --accent-color: #112240;
-            --text-color: #8892b0;
+            --text-color: #b4b9c4;
         }
 
         /* General Styles */
         body {
-            background-color: var(--primary-color);
-            color: #ccc;
+            background: var(--primary-color) !important;
+            color: var(--text-color) !important;
             font-family: 'Calibre', sans-serif;
         }
 
@@ -197,16 +203,22 @@
         }
 
         /* Timeline Styles */
+        .achievements-timeline {
+            background: #0a192f;
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
         .timeline-wrapper {
             position: relative;
             padding: 2rem 0;
+            background: none !important;
+            color: var(--text-color) !important;
         }
-
         .timeline-year {
             margin-bottom: 4rem;
             position: relative;
+            background: none !important;
         }
-
         .timeline-year::before {
             content: '';
             position: absolute;
@@ -214,34 +226,65 @@
             top: 0;
             height: 100%;
             width: 4px;
-            background: rgba(100, 255, 218, 0.2);
+            background: linear-gradient(180deg, #64ffda 0%, #112240 100%);
             transform: translateX(-50%);
             z-index: -1;
+            border-radius: 2px;
+            opacity: 0.25;
         }
-
         .year-label {
-            background: linear-gradient(45deg, var(--secondary-color), #00fff2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2.5rem;
+            background: none !important;
+            color: #64ffda !important;
+            font-size: 2.2rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: 2rem;
             position: relative;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px #64ffda44;
         }
-
         .year-label::before {
             content: '';
             position: absolute;
-            width: 30px;
-            height: 30px;
-            background: var(--accent-color);
-            border: 3px solid var(--secondary-color);
-            border-radius: 50%;
             left: 50%;
             top: 50%;
+            width: 32px;
+            height: 32px;
+            background: #112240;
+            border: 3px solid #64ffda;
+            border-radius: 50%;
             transform: translate(-50%, -50%);
             z-index: -1;
+            box-shadow: 0 2px 12px #64ffda22;
+        }
+        .timeline-year .achievement-card {
+            background: #112240 !important;
+            border: 1px solid rgba(100,255,218,0.10) !important;
+            border-radius: 1.5rem !important;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+            color: #fff !important;
+            margin-bottom: 1.5rem;
+        }
+        .timeline-year .achievement-card h3 {
+            color: #64ffda !important;
+        }
+        .timeline-year .achievement-details .badge {
+            background: rgba(100,255,218,0.10) !important;
+            color: #64ffda !important;
+            border: 1px solid rgba(100,255,218,0.3) !important;
+        }
+        @media (max-width: 768px) {
+            .timeline-year::before {
+                left: 20px;
+                transform: none;
+            }
+            .year-label {
+                font-size: 1.3rem;
+            }
+            .year-label::before {
+                left: 20px;
+                transform: translate(0, -50%);
+            }
         }
 
         /* Statistics Styles */
@@ -285,30 +328,6 @@
 
         .stat-card:hover i {
             transform: scale(1.2);
-        }
-
-        /* Footer Styles */
-        .footer-logo {
-            height: 60px;
-            margin-bottom: 1rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(100, 255, 218, 0.1);
-            border: 1px solid rgba(100, 255, 218, 0.3);
-            margin-left: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background: rgba(100, 255, 218, 0.2);
-            transform: translateY(-5px);
         }
 
         /* Responsive Styles */
@@ -369,14 +388,89 @@
                 font-size: 1rem;
             }
         }
+
+        .achievement-user-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--secondary-color);
+        }
+
+        /* Footer Styles - UPDATED FOR WHITE TEXT */
+        footer {
+            background: var(--primary-color) !important;
+            border-top: 1px solid rgba(100,255,218,0.10);
+            color: #fff !important;
+        }
+
+        footer h4 {
+            color: var(--secondary-color) !important;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        footer .list-unstyled li a {
+            color: #fff !important;
+            text-decoration: none;
+        }
+
+        footer .list-unstyled li a:hover,
+        .social-links a:hover i {
+            color: var(--secondary-color) !important;
+            text-decoration: none;
+        }
+
+        footer .text-muted {
+            color: #fff !important;
+        }
+
+        footer .fas, footer .fab {
+            transition: all 0.3s ease;
+        }
+
+        footer .social-links a i {
+            color: #fff !important;
+        }
+
+        footer p.small a {
+            color: #fff !important;
+        }
+
+        footer .list-unstyled li {
+            color: #fff !important;
+        }
+
+        .footer-logo {
+            height: 60px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            margin-left: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(100, 255, 218, 0.2);
+            transform: translateY(-5px);
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="images/logo.png" alt="UAP Cyber Security Club Logo" class="navbar-logo me-2">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Logo" class="navbar-logo me-2">
                 <span>UAP Cyber Security Club</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -384,11 +478,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="achievements.html">Achievements</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'events' %}active{% endif %}" href="{% url 'events' %}">Events</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'team' %}active{% endif %}" href="{% url 'team' %}">Team</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'achievements' %}active{% endif %}" href="{% url 'achievements' %}">Achievements</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'formerpresident' %}active{% endif %}" href="{% url 'formerpresident' %}">Former Presidents</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -424,118 +519,31 @@
             </div>
 
             <div class="row g-4">
-                <!-- Competition Achievement -->
-                <div class="col-lg-4 col-md-6 achievement-item" data-category="competitions">
-                    <div class="achievement-card">
-                        <div class="achievement-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <h3>Du Cyber Crawlers</h3>
-                        <p>Champion of the Du Cyber Crawlers.</p>
-                        <div class="achievement-details">
-                            <span class="badge">2023</span>
-                            <span class="badge">CTF Competition</span>
-                            <span class="badge">National</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 achievement-item" data-category="competitions">
-                    <div class="achievement-card">
-                        <div class="achievement-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <h3>Du National CTF</h3>
-                        <p>Runners-up of the Du National CTF, competing against 50+ university teams across the country.</p>
-                        <div class="achievement-details">
-                            <span class="badge">2022</span>
-                            <span class="badge">CTF Competition</span>
-                            <span class="badge">National</span>
+                {% if achievements %}
+                    {% for achievement in achievements %}
+                    <div class="col-lg-4 col-md-6 achievement-item" data-category="{{ achievement.category|default:'all' }}">
+                        <div class="achievement-card">
+                            <div class="achievement-icon">
+                                {% if achievement.associatedUser.photo %}
+                                    <img src="{{ achievement.associatedUser.photo.url }}" alt="{{ achievement.associatedUser.name }}" class="achievement-user-photo">
+                                {% else %}
+                                    <img src="/static/images/team/default.jpg" alt="{{ achievement.associatedUser.name }}" class="achievement-user-photo">
+                                {% endif %}
+                            </div>
+                            <h3>{{ achievement.title }}</h3>
+                            <p>{{ achievement.description }}</p>
+                            <div class="achievement-details">
+                                <span class="badge">{{ achievement.dateAchieved|date:"F Y" }}</span>
+                                <span class="badge">{{ achievement.associatedUser.name }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-
-
-                <!-- Research Achievement -->
-                <div class="col-lg-4 col-md-6 achievement-item" data-category="research">
-                    <div class="achievement-card">
-                        <div class="achievement-icon">
-                            <i class="fas fa-microscope"></i>
-                        </div>
-                        <h3>Published Research</h3>
-                        <p>Our team's research on IoT security vulnerabilities was published in the International Journal of Security Studies.</p>
-                        <div class="achievement-details">
-                            <span class="badge">2023</span>
-                            <span class="badge">Research</span>
-                            <span class="badge">Publication</span>
-                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p>No achievements available at the moment.</p>
                     </div>
-                </div>
-
-                <!-- Community Achievement -->
-                <div class="col-lg-4 col-md-6 achievement-item" data-category="community">
-                    <div class="achievement-card">
-                        <div class="achievement-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h3>Community Outreach</h3>
-                        <p>Conducted cybersecurity awareness workshops for over 1,000 high school students across the region.</p>
-                        <div class="achievement-details">
-                            <span class="badge">2023-2024</span>
-                            <span class="badge">Education</span>
-                            <span class="badge">Outreach</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Innovation Achievement -->
-                <div class="col-lg-4 col-md-6 achievement-item" data-category="innovation">
-                    <div class="achievement-card">
-                        <div class="achievement-icon">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <h3>Secure App Challenge Winner</h3>
-                        <p>Developed an innovative security solution for mobile banking that won the University Innovation Challenge.</p>
-                        <div class="achievement-details">
-                            <span class="badge">2024</span>
-                            <span class="badge">Innovation</span>
-                            <span class="badge">Development</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Competition Achievement -->
-                <div class="col-lg-4 col-md-6 achievement-item" data-category="competitions">
-                    <div class="achievement-card">
-                        <div class="achievement-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>National Cyber Drill</h3>
-                        <p>Runners-up of National Cyber Drill competition.</p>
-                        <div class="achievement-details">
-                            <span class="badge">2022</span>
-                            <span class="badge">National</span>
-                            <span class="badge">Runners-up</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Community Achievement -->
-                <div class="col-lg-4 col-md-6 achievement-item" data-category="community">
-                    <div class="achievement-card">
-                        <div class="achievement-icon">
-                            <i class="fas fa-handshake"></i>
-                        </div>
-                        <h3>Industry Partnership</h3>
-                        <p>Established partnerships with leading cybersecurity firms to provide internship opportunities for club members.</p>
-                        <div class="achievement-details">
-                            <span class="badge">Ongoing</span>
-                            <span class="badge">Partnership</span>
-                            <span class="badge">Career Development</span>
-                        </div>
-                    </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </section>
@@ -548,150 +556,115 @@
                 <p>A chronological journey through our club's achievements over the years</p>
             </div>
             <div class="timeline-wrapper">
-                <!-- 2023 -->
+                {% regroup achievements by dateAchieved|date:"Y" as year_list %}
+                {% for year in year_list %}
                 <div class="timeline-year">
-                    <h3 class="year-label">2023</h3>
+                    <h3 class="year-label">{{ year.grouper }}</h3>
                     <div class="row g-4">
-                        <div class="col-lg-4 col-md-6" data-category="competitions">
+                        {% for achievement in year.list %}
+                        <div class="col-lg-4 col-md-6" data-category="{{ achievement.category|default:'all' }}">
                             <div class="achievement-card">
                                 <div class="achievement-icon">
-                                    <i class="fas fa-trophy"></i>
+                                    {% if achievement.associatedUser.photo %}
+                                        <img src="{{ achievement.associatedUser.photo.url }}" alt="{{ achievement.associatedUser.name }}" class="achievement-user-photo">
+                                    {% else %}
+                                        <img src="/static/images/team/default.jpg" alt="{{ achievement.associatedUser.name }}" class="achievement-user-photo">
+                                    {% endif %}
                                 </div>
-                                <h3>National CTF Champions</h3>
-                                <p>First place in the National Cybersecurity CTF Competition 2023</p>
+                                <h3>{{ achievement.title }}</h3>
+                                <p>{{ achievement.description }}</p>
                                 <div class="achievement-details">
-                                    <span class="badge">National Level</span>
-                                    <span class="badge">CTF</span>
+                                    {% if achievement.category %}
+                                    <span class="badge">{{ achievement.category }}</span>
+                                    {% endif %}
+                                    {% if achievement.associatedUser %}
+                                    <span class="badge">{{ achievement.associatedUser.name }}</span>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6" data-category="research">
-                            <div class="achievement-card">
-                                <div class="achievement-icon">
-                                    <i class="fas fa-medal"></i>
-                                </div>
-                                <h3>Research Excellence</h3>
-                                <p>Published 5 research papers in international cybersecurity journals</p>
-                                <div class="achievement-details">
-                                    <span class="badge">Research</span>
-                                    <span class="badge">Publications</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6" data-category="innovation">
-                            <div class="achievement-card">
-                                <div class="achievement-icon">
-                                    <i class="fas fa-lightbulb"></i>
-                                </div>
-                                <h3>Innovation Award</h3>
-                                <p>Developed innovative security solutions for local businesses</p>
-                                <div class="achievement-details">
-                                    <span class="badge">Innovation</span>
-                                    <span class="badge">Industry</span>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-
-                <!-- 2022 -->
-                <div class="timeline-year">
-                    <h3 class="year-label">2022</h3>
-                    <div class="row g-4">
-                        <div class="col-lg-4 col-md-6" data-category="community">
-                            <div class="achievement-card">
-                                <div class="achievement-icon">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <h3>Community Impact</h3>
-                                <p>Trained 500+ students in cybersecurity fundamentals</p>
-                                <div class="achievement-details">
-                                    <span class="badge">Training</span>
-                                    <span class="badge">Community</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6" data-category="competitions">
-                            <div class="achievement-card">
-                                <div class="achievement-icon">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <h3>Regional Champions</h3>
-                                <p>Won the Regional Cyber Defense Competition</p>
-                                <div class="achievement-details">
-                                    <span class="badge">Regional</span>
-                                    <span class="badge">Defense</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
 
-    <!-- Statistics Section -->
-    <section class="achievement-stats py-5">
-        <div class="container">
-            <div class="row text-center g-4">
-                <div class="col-md-3 col-6">
-                    <div class="stat-card">
-                        <i class="fas fa-trophy fa-3x mb-3"></i>
-                        <h3 class="counter">15</h3>
-                        <p>Competition Wins</p>
-                    </div>
+  <!-- Statistics Section -->
+<section class="achievement-stats py-5 text-center">
+    <div class="container">
+        <div class="row justify-content-center g-4">
+            <div class="col-md-3 col-6 d-flex justify-content-center">
+                <div class="stat-card">
+                    <i class="fas fa-trophy fa-3x mb-3"></i>
+                    <h3 class="counter">{{ achievements|length }}</h3>
+                    <p>Total Achievements</p>
                 </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-card">
-                        <i class="fas fa-certificate fa-3x mb-3"></i>
-                        <h3 class="counter">50</h3>
-                        <p>Certifications</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-card">
-                        <i class="fas fa-project-diagram fa-3x mb-3"></i>
-                        <h3 class="counter">25</h3>
-                        <p>Projects</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-card">
-                        <i class="fas fa-users fa-3x mb-3"></i>
-                        <h3 class="counter">100</h3>
-                        <p>Members</p>
-                    </div>
+            </div>
+            <div class="col-md-3 col-6 d-flex justify-content-center">
+                <div class="stat-card">
+                    <i class="fas fa-certificate fa-3x mb-3"></i>
+                    <h3 class="counter">{{ achievements|dictsort:"dateAchieved"|length }}</h3>
+                    <p>Years of Excellence</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
+
+    <!-- Footer - NOW WITH WHITE TEXT -->
+    <footer class="py-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4 text-center mb-3 mb-md-0">
-                    <img src="images/logo.png" alt="UAP Cyber Security Club Logo" class="footer-logo mb-3">
-                    <h5>UAP Cyber Security Club</h5>
-                    <p>Empowering students with cybersecurity knowledge and skills.</p>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="mb-4">
+                        <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Club Logo" class="footer-logo" style="height: 60px; width: auto;">
+                        <h4 class="mb-3 mt-3">UAP Cyber Security Club</h4>
+                        <p>Empowering students with cybersecurity knowledge and skills.</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <h5>Quick Links</h5>
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="mb-4">Quick Links</h4>
                     <ul class="list-unstyled">
-                        <li><a href="index.html" class="text-white">Home</a></li>
-                        <li><a href="events.html" class="text-white">Events</a></li>
-                        <li><a href="team.html" class="text-white">Team</a></li>
-                        <li><a href="achievements.html" class="text-white">Achievements</a></li>
+                        <li class="mb-2"><a href="{% url 'home' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Home</a></li>
+                        <li class="mb-2"><a href="{% url 'events' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Events</a></li>
+                        <li class="mb-2"><a href="{% url 'team' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Team</a></li>
+                        <li class="mb-2"><a href="{% url 'achievements' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Achievements</a></li>
+                        <li class="mb-2"><a href="{% url 'formerpresident' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Former Presidents</a></li>
+                        <li class="mb-2"><a href="{% url 'contact' %}" class="text-decoration-none"><i class="fas fa-angle-right me-2"></i>Contact</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4 text-md-end">
-                    <h5>Follow Us</h5>
-                    <div class="social-links">
-                        <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-github"></i></a>
-                    </div>
+                <div class="col-lg-4">
+                    <h4 class="mb-4">Contact Us</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>74/A, Green Road, Farmgate 1205 Dhaka, Dhaka Division, Bangladesh</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i>cse.cybersecurity@uap-bd.edu</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i>+880 1886922110</li>
+                        <li class="mb-3"><a href="https://www.uap-bd.edu/" class="text-decoration-none" target="_blank">UAP <i class="fas fa-external-link-alt ms-1"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="background-color: rgba(100,255,218,0.10);">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p>&copy; {% now "Y" %} UAP Cyber Security Club. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="small">
+                        Designed By:
+                        <a href="https://MD-SAZID-HOSSAIN.github.io" target="_blank">Sazid</a>,
+                        <a href="https://sabrina1806.github.io/" target="_blank">Sabrina</a>,
+                        <a href="https://mahinchowdhury25.github.io/Portfolio/" target="_blank">Mahin</a>,
+                        <a href="https://alvi2356.github.io/portfolio/" target="_blank">Alvi</a>
+                    </p>
                 </div>
             </div>
         </div>
