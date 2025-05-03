@@ -1,7 +1,7 @@
 {% load static %}
 
 
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -413,9 +413,9 @@
       <form method="POST" action="{% url 'event_register' event.eventID %}">
         {% csrf_token %}
         <div class="form-group">
-         <!-- <label for="fullName" class="required-field">Full Name</label>
+          <label for="fullName" class="required-field">Full Name</label>
           <input type="text" id="fullName" name="fullName" class="form-input" required>
-        </div> -->
+        </div>
 
         <div class="form-group">
           <label for="studentId" class="required-field">Student ID</label>
