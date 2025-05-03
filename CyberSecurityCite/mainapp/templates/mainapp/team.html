@@ -1,6 +1,8 @@
 {% extends "mainapp/base.html" %}
+{% load static %}
 {% block title %}Our Team{% endblock %}
 {% block content %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,222 +14,528 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         :root {
             --accent-color: #112240;
             --secondary-color: #64ffda;
             --text-color: #ccd6f6;
+            --dark-bg: #0a192f;
+            --card-bg: #112240;
+            --hover-color: #233554;
+            --gradient-start: #0a192f;
+            --gradient-end: #112240;
         }
-        
-        /* Team Page Styles */
-        
-        .feature-list {
-            list-style: none;
-            padding-left: 0;
-            margin-bottom: 0;
+
+        body {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--text-color);
+            font-family: 'Kumbh Sans', sans-serif;
+            position: relative;
         }
-        
-        .feature-list li {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
         }
-        
-        .feature-list li i {
-            color: var(--secondary-color);
-            margin-right: 10px;
+
+        .page-wrapper {
+            position: relative;
+            z-index: 2;
         }
-        
-        .join-team {
-            background-color: #0a192f;
-            border-top: 1px solid rgba(100, 255, 218, 0.1);
-            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-        }
-        
-        .join-content h2 {
-            color: var(--secondary-color);
-            margin-bottom: 1.5rem;
-        }
-        
-        .btn-primary {
-            background-color: transparent;
-            border: 1px solid var(--secondary-color);
-            color: var(--secondary-color);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            background-color: rgba(100, 255, 218, 0.1);
-            border-color: var(--secondary-color);
-            color: white;
-        }
-        
-        .footer-logo {
-            height: 60px;
-        }
-        
-        footer ul li {
-            margin-bottom: 10px;
-        }
-        
-        footer ul li a {
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        
-        footer ul li a:hover {
-            color: var(--secondary-color) !important;
-            text-decoration: none;
-        }
-        
-        footer .social-links a {
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        footer .social-links a:hover {
-            color: var(--secondary-color) !important;
-        }
+
         .team-header {
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+            background: linear-gradient(rgba(10, 25, 47, 0.95), rgba(10, 25, 47, 0.95)),
                         url('../images/team-bg.jpg') center/cover;
-            padding: 100px 0 50px;
+            padding: 120px 0 60px;
             color: white;
             margin-top: 56px;
-        }
-        
-        .team-card {
-            perspective: 1000px;
-            height: 400px;
-        }
-        
-        .team-card-inner {
+            text-align: center;
             position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
-        }
-        
-        .team-card:hover .team-card-inner {
-            transform: rotateY(180deg);
-        }
-        
-        .team-card-front,
-        .team-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 15px;
             overflow: hidden;
         }
-        
-        .team-card-front {
-            background: var(--accent-color);
-            text-align: center;
-            padding: 2rem;
+
+        .team-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(100, 255, 218, 0.1) 0%, transparent 100%);
+            z-index: 1;
         }
-        
-        .team-card-back {
-            background: var(--accent-color);
-            transform: rotateY(180deg);
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+
+        .team-header > * {
+            position: relative;
+            z-index: 2;
         }
-        
-        .team-card img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 1.5rem;
-            border: 5px solid rgba(100, 255, 218, 0.2);
-        }
-        
-        .team-card h3 {
-            color: var(--secondary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .team-card .position {
-            color: var(--text-color);
-            font-size: 1.1rem;
+
+        .team-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
-        }
-        
-        .team-card .social-links {
-            margin-top: 1.5rem;
-        }
-        
-        .team-card .social-links a {
             color: var(--secondary-color);
-            font-size: 1.5rem;
-            margin: 0 0.5rem;
-            transition: all 0.3s ease;
+            text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
         }
-        
-        .team-card .social-links a:hover {
-            transform: translateY(-3px);
-            color: white;
+
+        .team-header .lead {
+            font-size: 1.25rem;
+            color: var(--text-color);
+            max-width: 800px;
+            margin: 0 auto;
         }
-        
-        .navbar-logo {
-            height: 40px;
-        }
-        
-        .team-categories {
-            background-color: #0a192f;
-        }
-        
-        .filter-btn {
-            background: transparent;
-            border: 1px solid var(--secondary-color);
-            color: var(--secondary-color);
-            padding: 8px 16px;
-            margin: 0 5px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-btn:hover, .filter-btn.active {
-            background: rgba(100, 255, 218, 0.1);
-            color: white;
-        }
-        
+
         .section-title {
             color: var(--secondary-color);
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             position: relative;
             display: inline-block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
         }
-        
+
         .section-title:after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 0;
-            width: 50%;
-            height: 3px;
-            background: var(--secondary-color);
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), transparent);
+            border-radius: 2px;
         }
-        
-        body {
-            background-color: #0a192f;
+
+        .section-title__tagline {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .team-one__single {
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .team-one__single:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.7);
+            border-color: rgba(100, 255, 218, 0.3);
+        }
+
+        .team-one__img {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .team-one__img img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .team-one__single:hover .team-one__img img {
+            transform: scale(1.1);
+        }
+
+        .team-one__social {
+            position: absolute;
+            bottom: -60px;
+            left: 0;
+            right: 0;
+            background: rgba(17, 34, 64, 0.95);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            transition: all 0.4s ease;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .team-one__single:hover .team-one__social {
+            bottom: 0;
+        }
+
+        .team-one__social a {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .team-one__social a:hover {
+            color: white;
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .team-one__content {
+            padding: 25px;
+            text-align: center;
+            background: var(--card-bg);
+        }
+
+        .team-one__name {
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .team-one__title {
             color: var(--text-color);
+            font-size: 1rem;
+            margin-bottom: 0;
+            opacity: 0.8;
+        }
+
+        .we-help {
+            padding: 100px 0;
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .we-help::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(100, 255, 218, 0.05) 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .we-help > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .we-help__text-1 {
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+        }
+
+        .we-help__img img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.7);
+        }
+
+        .site-footer {
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 80px 0 0;
+            position: relative;
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .site-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+        }
+
+        .footer-widget__about {
+            margin-bottom: 40px;
+        }
+
+        .footer-widget__logo {
+            margin-bottom: 25px;
+        }
+
+        .footer-widget__logo img {
+            max-width: 180px;
+        }
+
+        .footer-widget__about-text {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .footer-widget__newsletter-form {
+            margin-top: 25px;
+        }
+
+        .footer-widget__newsletter-input-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer-widget__newsletter-input-box input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .footer-widget__newsletter-btn {
+            background: var(--secondary-color);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            color: var(--dark-bg);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .footer-widget__newsletter-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .footer-widget__title {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .footer-widget__links-list li {
+            margin-bottom: 15px;
+        }
+
+        .footer-widget__links-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .footer-widget__links-list a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .footer-widget__contact-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .footer-widget__contact-list .icon {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+
+        .footer-widget__contact-list .text {
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .footer-widget__contact-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-widget__contact-list a:hover {
+            color: var(--secondary-color);
+        }
+
+        .site-footer__social {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .site-footer__social a {
+            color: var(--text-color);
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .site-footer__social a:hover {
+            color: var(--secondary-color);
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .site-footer__bottom {
+            margin-top: 60px;
+            padding: 25px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .site-footer__bottom-text {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 0;
+        }
+
+        .site-footer__bottom-text a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .site-footer__bottom-text a:hover {
+            color: white;
+        }
+
+        @media (max-width: 991px) {
+            .team-header {
+                padding: 80px 0 40px;
+            }
+
+            .team-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .we-help {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .team-header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .team-one__img img {
+                height: 300px;
+            }
+
+            .footer-widget__about,
+            .footer-widget__links,
+            .footer-widget__contact,
+            .footer-widget__social-box {
+                margin-bottom: 40px;
+            }
+        }
+
+        /* Add animation for particles */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Add navigation styles from home page */
+        .navbar {
+            background: rgba(10, 25, 47, 0.95);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border-radius: 0 0 18px 18px;
+            padding: 12px 0;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .navbar .navbar-brand span {
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        .navbar-nav .nav-link {
+            color: #e0e6ed !important;
+            margin: 0 8px;
+            font-weight: 500;
+            border-radius: 6px;
+            padding: 6px 16px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .navbar-nav .nav-link.active, .navbar-nav .nav-link:hover {
+            background: #233554;
+            color: #64ffda !important;
+        }
+        .navbar-toggler {
+            border: none;
+        }
+        .navbar-toggler:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #64ffda44;
+        }
+        .navbar-logo {
+            height: 40px;
+            width: auto;
+            max-width: 40px;
+            object-fit: contain;
+        }
+
+        /* Add footer styles from home page */
+        .footer-logo {
+            width: 80px;
+            height: auto;
+            max-width: 80px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+        .social-links a {
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            color: var(--secondary-color) !important;
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-                <img src="/static/images/logo.png" alt="UAP Cyber Security Club Logo" class="navbar-logo me-2">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Club Logo" class="navbar-logo me-2">
                 <span>UAP Cyber Security Club</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -241,156 +549,229 @@
                     <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'achievements' %}active{% endif %}" href="{% url 'achievements' %}">Achievements</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'formerpresident' %}active{% endif %}" href="{% url 'formerpresident' %}">Former Presidents</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'register' %}active{% endif %}" href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Page Header -->
-    <header class="page-header team-header">
-        <div class="container">
-            <h1 class="text-center">Our Team</h1>
-            <p class="lead text-center">Meet the dedicated members behind UAP Cyber Security Club</p>
-        </div>
-    </header>
-
-    <!-- Team Categories -->
-    <section class="team-categories py-4">
-        <div class="container">
-            <div class="category-filters text-center">
-                <button class="filter-btn active" data-filter="all">All Members</button>
-                <button class="filter-btn" data-filter="executive">Executive Board</button>
-                <button class="filter-btn" data-filter="technical">Technical Team</button>
-                <button class="filter-btn" data-filter="research">Research Team</button>
+    <div id="particles-js"></div>
+    <div class="page-wrapper">
+        <!-- Page Header -->
+        <header class="page-header team-header">
+            <div class="container">
+                <h1 class="text-center">Our Team</h1>
+                <p class="lead text-center">Meet the dedicated members behind UAP Cyber Security Club</p>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <!-- Team Members Section -->
-    <section class="team-members py-5">
-        <div class="container">
-            {% regroup members by position as position_list %}
-            {% for position in position_list %}
-            <div class="team-group mb-5">
-                <h2 class="section-title">{{ position.grouper }}</h2>
-                <div class="row g-4">
-                    {% for member in position.list %}
-                    <div class="col-lg-4 col-md-6" data-category="{{ position.grouper|lower }}">
-                        <div class="team-card">
-                            <div class="team-card-inner">
-                                <div class="team-card-front">
-                                    {% if member.user.photo %}
-                                        <img src="{{ member.user.photo.url }}" alt="{{ member.user.name }}">
-                                    {% else %}
-                                        <img src="/static/images/team/default.jpg" alt="{{ member.user.name }}">
-                                    {% endif %}
-                                    <h3>{{ member.user.name }}</h3>
-                                    <p class="position">{{ member.position }}</p>
-                                </div>
-                                <div class="team-card-back">
-                                    <h3>{{ member.user.name }}</h3>
-                                    <p class="position">{{ member.position }}</p>
-                                    <p class="bio">{{ member.bio }}</p>
-                                    <div class="social-links">
-                                        {% if member.socialLinks %}<a href="{{ member.socialLinks }}" target="_blank"><i class="fab fa-linkedin"></i></a>{% endif %}
-                                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        <!-- Convener Section -->
+        <section class="we-help">
+            <div class="container">
+                <div class="we-help__inner">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="we-help__left">
+                                <div class="section-title text-left">
+                                    <div class="section-title__tagline-box">
+                                        <span class="section-title__tagline">Our Convener</span>
                                     </div>
+                                    <h2 class="section-title__title">Dr. Muhammad Towfiqur Rahman</h2>
                                 </div>
+                                <p class="we-help__text-1">We believe that cyber activities or cyber security abilities are really crucial at this time. As a result, the CSE department at UAP has established a Cyber Security Club to improve cyber security awareness. I believe it will assist students in pursuing a rewarding career in the fields of cryptography, forensics, incident response, and secure network management. Students will be trained to increase their technical knowledge and abilities in order to take on the world's security challenges through this Club.</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="we-help__right">
+                                <div class="we-help__img">
+                                    <img src="{% static 'images/faculty.png' %}" alt="Dr. Muhammad Towfiqur Rahman">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Members Section -->
+        <section class="team-page py-5">
+            <div class="container">
+                <div class="section-title text-center">
+                    <div class="section-title__tagline-box">
+                        <span class="section-title__tagline">Meet the team (Spring-2024)</span>
+                    </div>
+                    <h2 class="section-title__title">Team members</h2>
+                </div>
+                <div class="row">
+                    {% for member in members %}
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="team-one__single">
+                            <div class="team-one__img">
+                                {% if member.user.photo %}
+                                    <img src="{{ member.user.photo.url }}" alt="{{ member.user.name }}">
+                                {% else %}
+                                    <img src="/static/images/team/default.jpg" alt="{{ member.user.name }}">
+                                {% endif %}
+                                <ul class="list-unstyled team-one__social">
+                                    {% if member.socialLinks.github %}
+                                    <li><a href="{{ member.socialLinks.github }}"><i class="fab fa-github"></i></a></li>
+                                    {% endif %}
+                                    {% if member.socialLinks.facebook %}
+                                    <li><a href="{{ member.socialLinks.facebook }}"><i class="fab fa-facebook"></i></a></li>
+                                    {% endif %}
+                                    {% if member.socialLinks.linkedin %}
+                                    <li><a href="{{ member.socialLinks.linkedin }}"><i class="fab fa-linkedin-in"></i></a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="team-one__content">
+                                <h4 class="team-one__name">{{ member.user.name }}</h4>
+                                <p class="team-one__title">{{ member.position }}</p>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
-            {% endfor %}
-        </div>
-    </section>
-    
-    <!-- Join the Team Section -->
-    <section class="join-team py-5">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <div class="join-content">
-                        <h2>Want to Join Our Team?</h2>
-                        <p class="lead mb-4">We're always looking for passionate individuals to join our club.</p>
-                        <ul class="feature-list">
-                            <li><i class="fas fa-check-circle"></i> Learn from experienced members</li>
-                            <li><i class="fas fa-check-circle"></i> Work on real-world projects</li>
-                            <li><i class="fas fa-check-circle"></i> Participate in competitions</li>
-                            <li><i class="fas fa-check-circle"></i> Build your network</li>
-                        </ul>
-                        <a href="{% url 'contact' %}" class="btn btn-primary btn-lg mt-4">Get in Touch</a>
-                    </div>
+        </section>
+
+        <!-- Footer -->
+<footer class="bg-dark text-white py-4">
+    <div class="container px-4 px-md-5">
+        <div class="row">
+            <div class="col-md-3 text-center mb-3 mb-md-0">
+                <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Club Logo" class="footer-logo mb-3">
+                <h5>UAP Cyber Security Club</h5>
+                <p>Empowering students with cybersecurity knowledge and skills.</p>
+            </div>
+            <div class="col-md-3 mb-3 mb-md-0">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                    <li><a href="{% url 'events' %}" class="text-white">Events</a></li>
+                    <li><a href="{% url 'team' %}" class="text-white">Team</a></li>
+                    <li><a href="{% url 'achievements' %}" class="text-white">Achievements</a></li>
+                    <li><a href="{% url 'formerpresident' %}" class="text-white">Former President</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-3 mb-md-0">
+                <h5>Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-phone me-2"></i> +880 1886922110</li>
+                    <li><i class="fas fa-envelope me-2"></i> cse.cybersecurity@uap-bd.edu</li>
+                    <li><i class="fas fa-map-marker-alt me-2"></i> 74/A, Green Road, Farmgate 1205 Dhaka, Dhaka Division, Bangladesh</li>
+                </ul>
+            </div>
+            <div class="col-md-3 text-md-end">
+                <h5>Follow Us</h5>
+                <div class="social-links">
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-github"></i></a>
                 </div>
-                <div class="col-lg-6">
-                    <div class="join-image">
-                        <img src="/static/images/join-team.jpg" alt="Join Our Team" class="img-fluid rounded shadow-lg">
-                    </div>
+                <div class="mt-3">
+                    <a href="https://www.uap-bd.edu/" class="text-info" target="_blank">UAP <i class="fas fa-external-link-alt ms-1"></i></a>
                 </div>
             </div>
         </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 text-center mb-3 mb-md-0">
-                    <img src="images/logo.png" alt="UAP Cyber Security Club Logo" class="footer-logo mb-3">
-                    <h5>UAP Cyber Security Club</h5>
-                    <p>Empowering students with cybersecurity knowledge and skills.</p>
-                </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="index.html" class="text-white">Home</a></li>
-                        <li><a href="events.html" class="text-white">Events</a></li>
-                        <li><a href="team.html" class="text-white">Team</a></li>
-                        <li><a href="achievements.html" class="text-white">Achievements</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 text-md-end">
-                    <h5>Follow Us</h5>
-                    <div class="social-links">
-                        <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-github"></i></a>
-                    </div>
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <small class="text-secondary">&copy; {% now "Y" %} UAP Cyber Security Club. All rights reserved.</small>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 text-center">
+                <small class="text-light">Designed By:
+                    <a href="https://MD-SAZID-HOSSAIN.github.io" class="text-info" target="_blank">Sazid</a>,
+                    <a href="https://sabrina1806.github.io/" class="text-info" target="_blank">Sabrina</a>,
+                    <a href="https://mahinchowdhury25.github.io/Portfolio/" class="text-info" target="_blank">Mahin</a>,
+                    <a href="https://alvi2356.github.io/portfolio/" class="text-info" target="_blank">Alvi</a>
+                </small>
+            </div>
         </div>
     </div>
-</div>
-    </footer>
+</footer>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add Particles.js initialization -->
     <script>
-        // Filter functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    const filterValue = this.getAttribute('data-filter');
-                    const teamCards = document.querySelectorAll('[data-category]');
-                    
-                    teamCards.forEach(card => {
-                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#64ffda'
+                },
+                shape: {
+                    type: 'circle'
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: {
+                        enable: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#64ffda',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 0.5
                         }
-                    });
-                });
-            });
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
         });
     </script>
 </body>
