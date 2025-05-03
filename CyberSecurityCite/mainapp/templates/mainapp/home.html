@@ -963,7 +963,7 @@
                         </div>
                         <p class="lead typing-text">Securing the digital future, one byte at a time</p>
                         <div class="cta-buttons">
-                            <a href="events.html" class="btn btn-primary btn-lg me-3 pulse-button">
+                            <a href="{% url 'events' %}" class="btn btn-primary btn-lg me-3 pulse-button">
                                 <i class="fas fa-calendar-alt me-2"></i>Upcoming Events
                             </a>
                             <a href="#contact" class="btn btn-outline-light btn-lg glow-button">
@@ -1008,7 +1008,7 @@
                             <i class="fas fa-shield-alt"></i>
                         </div>
                         <div class="stat-content">
-                            <h3 class="counter" data-target="1500">0</h3>
+                            <h3 class="counter" data-target="10">0</h3>
                             <p>Security Projects</p>
                         </div>
                         <div class="stat-glow"></div>
@@ -1020,19 +1020,19 @@
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="stat-content">
-                            <h3 class="counter" data-target="500">0</h3>
+                            <h3 class="counter" data-target="12">0</h3>
                             <p>Active Members</p>
                         </div>
                         <div class="stat-glow"></div>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-4">
-                    <div class="stat-box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-box" data-aos="fade-up" data-aos-delay="12">
                         <div class="stat-icon">
                             <i class="fas fa-trophy"></i>
                         </div>
                         <div class="stat-content">
-                            <h3 class="counter" data-target="25">0</h3>
+                            <h3 class="counter" data-target="10">0</h3>
                             <p>Awards Won</p>
                         </div>
                         <div class="stat-glow"></div>
@@ -1044,7 +1044,7 @@
                             <i class="fas fa-code-branch"></i>
                         </div>
                         <div class="stat-content">
-                            <h3 class="counter" data-target="100">0</h3>
+                            <h3 class="counter" data-target="10">0</h3>
                             <p>Contributions</p>
                         </div>
                         <div class="stat-glow"></div>
@@ -1139,28 +1139,28 @@
                             <div class="col-6">
                                 <div class="stat-card">
                                     <i class="fas fa-users fa-2x text-secondary mb-3"></i>
-                                    <h4 class="text-light">200+</h4>
+                                    <h4 class="text-light">12</h4>
                                     <p>Active Members</p>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="stat-card">
                                     <i class="fas fa-trophy fa-2x text-secondary mb-3"></i>
-                                    <h4 class="text-light">15+</h4>
+                                    <h4 class="text-light">7+</h4>
                                     <p>Awards Won</p>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="stat-card">
                                     <i class="fas fa-calendar-alt fa-2x text-secondary mb-3"></i>
-                                    <h4 class="text-light">50+</h4>
+                                    <h4 class="text-light">15+</h4>
                                     <p>Events Hosted</p>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="stat-card">
                                     <i class="fas fa-certificate fa-2x text-secondary mb-3"></i>
-                                    <h4 class="text-light">100+</h4>
+                                    <h4 class="text-light">10+</h4>
                                     <p>Certifications</p>
                                 </div>
                             </div>
@@ -1177,6 +1177,9 @@
             <div class="section-header">
                 <h2>Meet Our Team</h2>
                 <p class="text-light">Our dedicated team members</p>
+                <a href="{% url 'team' %}" class="btn btn-primary mt-3">
+                    <i class="fas fa-users me-2"></i>View Full Team
+                </a>
             </div>
             <div class="row g-4">
                 {% if team_members %}
@@ -1215,7 +1218,6 @@
                     {% endfor %}
                 {% else %}
                     <div class="col-12 text-center">
-                        <p class="text-light">No team members available at the moment.</p>
                     </div>
                 {% endif %}
             </div>
@@ -1284,30 +1286,27 @@
             particlesJS('particles-js', {
                 "particles": {
                     "number": {
-                        "value": 80,
+                        "value": 120,
                         "density": {
                             "enable": true,
-                            "value_area": 800
+                            "value_area": 1200
                         }
                     },
                     "color": {
-                        "value": "#64ffda"
+                        "value": ["#64ffda", "#00b4d8", "#37CDBE", "#00fff2"]
                     },
                     "shape": {
                         "type": "circle",
                         "stroke": {
                             "width": 0,
                             "color": "#000000"
-                        },
-                        "polygon": {
-                            "nb_sides": 5
                         }
                     },
                     "opacity": {
-                        "value": 0.5,
-                        "random": false,
+                        "value": 0.6,
+                        "random": true,
                         "anim": {
-                            "enable": false,
+                            "enable": true,
                             "speed": 1,
                             "opacity_min": 0.1,
                             "sync": false
@@ -1317,31 +1316,31 @@
                         "value": 3,
                         "random": true,
                         "anim": {
-                            "enable": false,
-                            "speed": 40,
+                            "enable": true,
+                            "speed": 2,
                             "size_min": 0.1,
                             "sync": false
                         }
                     },
                     "line_linked": {
                         "enable": true,
-                        "distance": 150,
+                        "distance": 180,
                         "color": "#64ffda",
-                        "opacity": 0.4,
+                        "opacity": 0.3,
                         "width": 1
                     },
                     "move": {
                         "enable": true,
-                        "speed": 2,
+                        "speed": 1.2,
                         "direction": "none",
-                        "random": false,
+                        "random": true,
                         "straight": false,
                         "out_mode": "out",
                         "bounce": false,
                         "attract": {
-                            "enable": false,
-                            "rotateX": 600,
-                            "rotateY": 1200
+                            "enable": true,
+                            "rotateX": 800,
+                            "rotateY": 1600
                         }
                     }
                 },
@@ -1360,20 +1359,20 @@
                     },
                     "modes": {
                         "grab": {
-                            "distance": 140,
+                            "distance": 180,
                             "line_linked": {
-                                "opacity": 1
+                                "opacity": 0.8
                             }
                         },
                         "bubble": {
-                            "distance": 400,
-                            "size": 40,
+                            "distance": 250,
+                            "size": 12,
                             "duration": 2,
-                            "opacity": 8,
+                            "opacity": 0.8,
                             "speed": 3
                         },
                         "repulse": {
-                            "distance": 200,
+                            "distance": 120,
                             "duration": 0.4
                         },
                         "push": {
@@ -1405,6 +1404,8 @@
                         <li><a href="{% url 'events' %}" class="text-white">Events</a></li>
                         <li><a href="{% url 'team' %}" class="text-white">Team</a></li>
                         <li><a href="{% url 'achievements' %}" class="text-white">Achievements</a></li>
+                        <li><a href="{% url 'formerpresident' %}" class="text-white">Former Presidents</a></li>
+                        <li><a href="{% url 'contact' %}" class="text-white">Contact</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 text-md-end">
@@ -1415,9 +1416,9 @@
                         <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
                         <a href="#" class="text-white"><i class="fab fa-github"></i></a>
                     </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+                    <div class="mt-3">
+                        <address class="mb-0 text-white-50">
+                            <small>
+                                <i class="fas fa-map-marker-alt me-1"></i> 74/A, Green Road, Farmgate<br>
+                                Dhaka 1205, Bangladesh<br>
+                                <i class="fas fa-envelope me-1"></i> cse.cybersecuri... (2 KB left)
