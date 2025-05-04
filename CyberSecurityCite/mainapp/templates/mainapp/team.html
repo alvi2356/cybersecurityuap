@@ -548,9 +548,7 @@
                     <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'achievements' %}active{% endif %}" href="{% url 'achievements' %}">Achievements</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'formerpresident' %}active{% endif %}" href="{% url 'formerpresident' %}">Former Presidents</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
-                    {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
-                    {% endif %}
+
                 </ul>
             </div>
         </div>
@@ -585,7 +583,7 @@
                         <div class="col-xl-6 col-lg-6">
                             <div class="we-help__right">
                                 <div class="we-help__img">
-                                    <img src="{% static 'images/faculty.png' %}" alt="Dr. Muhammad Towfiqur Rahman">
+                                    <img src="{% static 'images/image.png' %}" alt="Dr. Muhammad Towfiqur Rahman">
                                 </div>
                             </div>
                         </div>
