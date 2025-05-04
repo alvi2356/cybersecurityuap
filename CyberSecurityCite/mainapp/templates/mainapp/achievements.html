@@ -545,7 +545,6 @@
                             <p>{{ achievement.description }}</p>
                             <div class="achievement-details">
                                 <span class="badge">{{ achievement.dateAchieved|date:"F Y" }}</span>
-                                <span class="badge">{{ achievement.associatedUser.name }}</span>
                             </div>
                         </div>
                     </div>
@@ -587,9 +586,6 @@
                                 <div class="achievement-details">
                                     {% if achievement.category %}
                                     <span class="badge">{{ achievement.category }}</span>
-                                    {% endif %}
-                                    {% if achievement.associatedUser %}
-                                    <span class="badge">{{ achievement.associatedUser.name }}</span>
                                     {% endif %}
                                 </div>
                             </div>

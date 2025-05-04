@@ -46,7 +46,8 @@ class Event(models.Model):
     location = models.CharField(max_length=200)
     capacity = models.IntegerField()
     registrationDeadline = models.DateField()
-
+    def __str__(self):
+        return self.title
 
 class Registration(models.Model):
     registrationID = models.AutoField(primary_key=True)
@@ -62,7 +63,8 @@ class Achievement(models.Model):
     description = models.TextField()
     dateAchieved = models.DateField()
     associatedUser = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    def __str__(self):
+        return self.title
 
 class ContactForm(models.Model):
     formID = models.AutoField(primary_key=True)
