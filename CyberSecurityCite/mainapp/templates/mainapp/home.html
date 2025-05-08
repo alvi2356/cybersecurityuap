@@ -1389,50 +1389,59 @@
     </script>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 text-center mb-3 mb-md-0">
-                    <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Club Logo" class="footer-logo mb-3">
-                    <h5>UAP Cyber Security Club</h5>
-                    <p>Empowering students with cybersecurity knowledge and skills.</p>
+   <footer class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 text-center mb-3 mb-md-0">
+                <img src="{% static 'images/logo.png' %}" alt="UAP Cyber Security Club Logo" class="footer-logo mb-3">
+                <h5>UAP Cyber Security Club</h5>
+                <p>Empowering students with cybersecurity knowledge and skills.</p>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                    <li><a href="{% url 'events' %}" class="text-white">Events</a></li>
+                    <li><a href="{% url 'team' %}" class="text-white">Team</a></li>
+                    <li><a href="{% url 'achievements' %}" class="text-white">Achievements</a></li>
+                    <li><a href="{% url 'formerpresident' %}" class="text-white">Former Presidents</a></li>
+                    <li><a href="{% url 'contact' %}" class="text-white">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <h5>Follow Us</h5>
+                <div class="social-links">
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-github"></i></a>
                 </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
-                        <li><a href="{% url 'events' %}" class="text-white">Events</a></li>
-                        <li><a href="{% url 'team' %}" class="text-white">Team</a></li>
-                        <li><a href="{% url 'achievements' %}" class="text-white">Achievements</a></li>
-                        <li><a href="{% url 'formerpresident' %}" class="text-white">Former Presidents</a></li>
-                        <li><a href="{% url 'contact' %}" class="text-white">Contact</a></li>
-                    </ul>
+                <div class="mt-3">
+                    <address class="mb-0 text-white-50">
+                        <small>
+                            <i class="fas fa-map-marker-alt me-1"></i> 74/A, Green Road, Farmgate<br>
+                            Dhaka 1205, Bangladesh<br>
+                            <i class="fas fa-envelope me-1"></i> cse.cybersecurity@uap-bd.edu
+                        </small>
+                    </address>
                 </div>
-                <div class="col-md-4 text-md-end">
-                    <h5>Follow Us</h5>
-                    <div class="social-links">
-                        <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-github"></i></a>
-                    </div>
-                    <div class="mt-3">
-                        <address class="mb-0 text-white-50">
-                            <small>
-                                <i class="fas fa-map-marker-alt me-1"></i> 74/A, Green Road, Farmgate<br>
-                                Dhaka 1205, Bangladesh<br>
-                                <i class="fas fa-envelope me-1"></i> cse.cybersecurity@uap-bd.edu
-                                 <div class="row mt-4">
-        <div class="col-12 text-center">
-          <small>&copy; {% now "Y" %} UAP Cyber Security Club. All rights reserved.</small>
-          <div class="mt-1">
-            <small>Designed By:
-              <a href="https://MD-SAZID-HOSSAIN.github.io" target="_blank" class="text-white-50">Sazid</a>,
-              <a href="https://sabrina1806.github.io/" target="_blank" class="text-white-50">Sabrina</a>,
-              <a href="https://mahinchowdhury25.github.io/Portfolio/" target="_blank" class="text-white-50">Mahin</a>,
-              <a href="https://alvi2356.github.io/portfolio/" target="_blank" class="text-white-50">Alvi</a>
-            </small>
-          </div>
+            </div>
+        </div>
 
-
+        <!-- Centered Bottom Section -->
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <small>&copy; {% now "Y" %} UAP Cyber Security Club. All rights reserved.</small>
+                <div class="mt-1">
+                    <small>Designed By:
+                        <a href="https://MD-SAZID-HOSSAIN.github.io" target="_blank" class="text-white-50">Sazid</a>,
+                        <a href="https://sabrina1806.github.io/" target="_blank" class="text-white-50">Sabrina</a>,
+                        <a href="https://mahinchowdhury25.github.io/Portfolio/" target="_blank" class="text-white-50">Mahin</a>,
+                        <a href="https://alvi2356.github.io/portfolio/" target="_blank" class="text-white-50">Alvi</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
